@@ -1,0 +1,203 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="ghassan-murad">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
+
+      app-header {
+        color: var(--app-primary-color);
+        background-color: var(--app-secondary-color);
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .dropdown-button {
+        color: var(--app-primary-color);
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .title {
+        color: var(--app-primary-color);
+        font-family: 'Square', 'Cairo', 'Roboto', 'Noto', sans-serif;
+        text-transform: uppercase;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 1.3rem;
+      }
+
+      .logo {
+        width: 35px;
+        margin: 0 20px;
+      }
+
+      .dropdown-menu {
+        width: 100%;
+        box-sizing: border-box;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        background-color: #000;
+        height: 0;
+        transition: height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        padding: 0 16px;
+      }
+
+      .dropdown-list {
+        height: 100%;
+      }
+
+      .menu-item {
+        color: var(--app-primary-color);
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin-right: 50px;
+        padding: 0 16px;
+        height: 100%;
+        text-decoration: none;
+      }
+
+      .menu-item:hover {
+        color: #a1a1a1;
+      }
+
+      .menu-item.iron-selected {
+        background-color: var(--app-background-color);
+        color: #fff;
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+      <!-- Main content -->
+    <app-header-layout>
+
+      <app-header fixed effects="waterfall">
+        <app-toolbar class="toolbar horizontal layout">
+          <div class="dropdown-button" on-click="toggleDropdownMenu" on-mouseover="showDropdownMenu">Dropdown Menu</div>
+          <span class="flex"></span>
+          <a class="title" href="/">Ghassan Murad</a>
+          <img class="logo" src="/images/Logo.svg" />
+          <div id="dropdown_menu" class="dropdown-menu horizontal layout center">
+            <div class="menu-item vertical layout center-justified">عربي</div>
+            <span class="flex"></span>
+            <iron-selector selected="[[page]]" attr-for-selected="name" class="dropdown-list horizontal layout" role="navigation">
+              <a name="projects" href="/projects" class="menu-item vertical layout center-justified">Projects</a>
+              <a name="clients" href="/clients" class="menu-item vertical layout center-justified">Clients</a>
+              <a name="offers" href="/offers" class="menu-item vertical layout center-justified">Offers</a>
+              <a name="contact" href="/contact" class="menu-item vertical layout center-justified">Contact</a>
+            </iron-selector>
+          </div>
+        </app-toolbar>
+      </app-header>
+
+      <div>
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="not-found"
+            role="main">
+          <home-view name="home"></home-view>
+          <projects-view name="projects"></projects-view>
+          <clients-view name="clients"></clients-view>
+          <offers-view name="offers"></offers-view>
+          <contact-view name="contact"></contact-view>
+        </iron-pages>
+      </div>
+    </app-header-layout>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ghassan-murad',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+        dropdownMenuShown: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _showPage404: function() {
+        this.page = 'not-found';
+      },
+
+      toggleDropdownMenu: function() {
+        if(this.dropdownMenuShown) {
+          this.hideDropdownMenu();
+        } else {
+          this.showDropdownMenu();
+        }
+      },
+
+      showDropdownMenu: function() {
+        if(!this.dropdownMenuShown) {
+          var app = this;
+          $(window).bind('scroll', function() {
+            app.hideDropdownMenu();
+          });
+          $(this.$.dropdown_menu).css('height', '40px');
+          this.dropdownMenuShown = true;
+        }
+      },
+
+      hideDropdownMenu: function() {
+        if(this.dropdownMenuShown) {
+          $(window).unbind('scroll');
+          $(this.$.dropdown_menu).css('height', '0');
+          this.dropdownMenuShown = false;
+        }
+      }
+    });
+  </script>
+</dom-module>

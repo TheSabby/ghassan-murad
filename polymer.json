@@ -1,0 +1,25 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/ghassan-murad.html",
+  "fragments": [
+    "src/home-view.html",
+    "src/clients-view.html",
+    "src/contact-view.html",
+    "src/not-found-view.html",
+    "src/offers-view.html",
+    "src/projects-view.html",
+    "src/project-item.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "fonts/**/*",
+    "js/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "bower_components/jquery/dist/jquery.min.js"
+  ]
+}
