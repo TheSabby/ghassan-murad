@@ -19,6 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
+<link rel="import" href="entry-animation.html">
+
 <dom-module id="ghassan-murad">
   <template>
     <style include="iron-flex iron-flex-alignment">
@@ -100,42 +102,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-      <!-- Main content -->
-    <app-header-layout>
-
-      <app-header fixed effects="waterfall">
-        <app-toolbar class="toolbar horizontal layout">
-          <div class="dropdown-button" on-click="toggleDropdownMenu" on-mouseover="showDropdownMenu">Dropdown Menu</div>
-          <span class="flex"></span>
-          <a class="title" href="/">Ghassan Murad</a>
-          <img class="logo" src="/images/Logo.svg" />
-          <div id="dropdown_menu" class="dropdown-menu horizontal layout center">
-            <div class="menu-item vertical layout center-justified">عربي</div>
+    <iron-pages selected="[[insideSite]]">
+      <entry-animation></entry-animation>
+      
+      <app-header-layout>
+        <app-header fixed effects="waterfall">
+          <app-toolbar class="toolbar horizontal layout">
+            <div class="dropdown-button" on-click="toggleDropdownMenu" on-mouseover="showDropdownMenu">Dropdown Menu</div>
             <span class="flex"></span>
-            <iron-selector selected="[[page]]" attr-for-selected="name" class="dropdown-list horizontal layout" role="navigation">
-              <a name="projects" href="/projects" class="menu-item vertical layout center-justified">Projects</a>
-              <a name="clients" href="/clients" class="menu-item vertical layout center-justified">Clients</a>
-              <a name="offers" href="/offers" class="menu-item vertical layout center-justified">Offers</a>
-              <a name="contact" href="/contact" class="menu-item vertical layout center-justified">Contact</a>
-            </iron-selector>
-          </div>
-        </app-toolbar>
-      </app-header>
+            <a class="title" href="/">Ghassan Murad</a>
+            <img class="logo" src="/images/Logo.svg" />
+            <div id="dropdown_menu" class="dropdown-menu horizontal layout center">
+              <div class="menu-item vertical layout center-justified">عربي</div>
+              <span class="flex"></span>
+              <iron-selector selected="[[page]]" attr-for-selected="name" class="dropdown-list horizontal layout" role="navigation">
+                <a name="projects" href="/projects" class="menu-item vertical layout center-justified">Projects</a>
+                <a name="clients" href="/clients" class="menu-item vertical layout center-justified">Clients</a>
+                <a name="offers" href="/offers" class="menu-item vertical layout center-justified">Offers</a>
+                <a name="contact" href="/contact" class="menu-item vertical layout center-justified">Contact</a>
+              </iron-selector>
+            </div>
+          </app-toolbar>
+        </app-header>
 
-      <div>
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="not-found"
-            role="main">
-          <home-view name="home"></home-view>
-          <projects-view name="projects"></projects-view>
-          <clients-view name="clients"></clients-view>
-          <offers-view name="offers"></offers-view>
-          <contact-view name="contact"></contact-view>
-        </iron-pages>
-      </div>
-    </app-header-layout>
+        <div>
+          <iron-pages
+              selected="[[page]]"
+              attr-for-selected="name"
+              fallback-selection="not-found"
+              role="main">
+            <home-view name="home"></home-view>
+            <projects-view name="projects"></projects-view>
+            <clients-view name="clients"></clients-view>
+            <offers-view name="offers"></offers-view>
+            <contact-view name="contact"></contact-view>
+          </iron-pages>
+        </div>
+      </app-header-layout>
+    </iron-pages>
   </template>
 
   <script>
@@ -143,6 +147,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'ghassan-murad',
 
       properties: {
+        insideSite: {
+          type: Number,
+          value: 0
+        },
         page: {
           type: String,
           reflectToAttribute: true,
@@ -158,6 +166,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)',
       ],
 
+      listeners: {
+        'enter-site': 'enterSite'
+      },
+
       _routePageChanged: function(page) {
         this.page = page || 'home';
       },
@@ -170,6 +182,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showPage404: function() {
         this.page = 'not-found';
+      },
+
+      enterSite: function() {
+        this.insideSite = 1;
       },
 
       toggleDropdownMenu: function() {

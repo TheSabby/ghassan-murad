@@ -1,0 +1,198 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="entry-animation">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+        height: 100vh;
+        width: 100vw;
+      }
+
+      @keyframes fade {
+      	0% {
+      		-webkit-transform: scale(1);
+      		transform: scale(1);
+      	}
+
+      	50% {
+      		-webkit-transform: scale(0.01);
+      		transform: scale(0.01);
+      	}
+
+      	100% {
+      		-webkit-transform: scale(1);
+      		transform: scale(1);
+      	}
+
+      }
+
+      @keyframes pulse {
+      	0% {
+      		opacity: 0;
+      	}
+
+      	50% {
+      		opacity: 50;
+      	}
+
+      	100% {
+      		opacity: 100;
+      	}
+
+      }
+
+      body {
+      	padding: 0;
+      	margin: 0;
+      	background: #1e1e1e;
+      	width: 100vw;
+      	height: 100vh;
+      }
+
+      .shadowcontainer {
+      	width: 100%;
+      	height: 100%;
+      	display: flex;
+      	flex-direction: column;
+      	justify-content: center;
+      	align-items: center;
+      	transition: width 0.2s;
+      }
+
+      .socket {
+      	width: 220px;
+      	height: 220px;
+      	text-align: center;
+      	position: relative;
+      	display: flex;
+      	flex-direction: column;
+      }
+
+      .socket-row {
+      	display: flex;
+      	flex-direction: row;
+      	justify-content: space-between;
+      	flex: 1;
+      }
+
+      .socket-brick {
+      	background-color: #fff;
+      	flex: 1;
+      	animation-name: fade;
+      	animation-duration: 1s;
+      	animation-iteration-count: 1;
+      	-webkit-animation-name: fade;
+      	-webkit-animation-duration: 1s;
+      	-webkit-animation-iteration-count: 1;
+      	-webkit-animation-fill-mode: forwards;
+      }
+
+      .box {
+      	width: 220px;
+      	height: 220px;
+      	text-align: center;
+      	position: relative;
+      	flex-direction: column;
+      	justify-content: center;
+      	align-items: center;
+      	background-color: white;
+      	display: none;
+      	cursor: pointer;
+      	transition: width 0.3s;
+      }
+
+      .logo {
+      	width: 140px;
+      	opacity: 0;
+      	z-index: 2;
+      	animation-name: pulse;
+      	animation-duration: 1s;
+      	animation-iteration-count: 1;
+      	animation-delay: 1s;
+      	-webkit-animation-name: pulse;
+      	-webkit-animation-duration: 1s;
+      	-webkit-animation-iteration-count: 1;
+      	-webkit-animation-fill-mode: forwards;
+      	cursor: pointer;
+      }
+
+      .enter {
+      	font-size: 12px;
+      	font-family: Helvetica, Arial, sans-serif;
+      	text-decoration-style: thin;
+      	margin-top: 10px;
+      	position: absolute;
+      	bottom: 10px;
+      	opacity: 0;
+      	transition: opacity 0.3s;
+      }
+    </style>
+
+    <div class="shadowcontainer" on-click="enterSite">
+  		<div id="box" class="box">
+  			<img src="/images/black-logo.svg" class="logo">
+  			<div id="enter" class="enter">SHOWCASE ></div>
+  		</div>
+  		<div id="socket" class="socket">
+  			<div class="socket-row">
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  			</div>
+  			<div class="socket-row">
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  			</div>
+  			<div class="socket-row">
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  				<div class="socket-brick"></div>
+  			</div>
+  		</div>
+  	</div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'entry-animation',
+
+      enterSite: function() {
+        this.fire('enter-site');
+      },
+
+      ready: function() {
+        var animation = this;
+        setTimeout(function() {
+    			animation.$.box.style.display = 'flex';
+    			animation.$.socket.style.display = 'none';
+    		}, 1000);
+
+    		setTimeout(function() {
+          animation.$.box.addEventListener('mouseenter', function() {
+            animation.$.box.style.width = '100%';
+            animation.$.enter.style.opacity = '1';
+          });
+
+          animation.$.box.addEventListener('mouseleave', function() {
+            animation.$.box.style.width = '220px';
+            animation.$.enter.style.opacity = '0';
+          });
+    		}, 2000);
+      }
+    });
+  </script>
+</dom-module>
