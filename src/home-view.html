@@ -9,14 +9,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="home-view">
   <template>
-    <style>
+    <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
       }
     </style>
+
 
 
   </template>
@@ -24,6 +26,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'home-view',
+
+      ready: function() {
+        
+      }
     });
   </script>
 </dom-module>
