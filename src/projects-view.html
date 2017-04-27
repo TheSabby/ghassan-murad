@@ -10,8 +10,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="import" href="project-item.html">
+<link rel="import" href="project-view.html">
 
 <dom-module id="projects-view">
   <template>
@@ -78,12 +82,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
+    <app-route
+        route="{{route}}"
+        pattern="/:view"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
     <div id="typed_area" class="typed-area horizontal layout center-center">
       <div id="typed" class="typed"></div>
     </div>
 
-    <div id="projects" class="projects horizontal layout justified wrap">
-    </div>
+    <iron-pages
+      selected="{{routeData.view}}"
+      attr-for-selected="name"
+      fallback-selection="list"
+      role="main">
+      <div id="projects" name="list" class="projects horizontal layout justified wrap"></div>
+      <project-view id="project" name="project" project="{{selectedProject}}"></project-view>
+    </iron-pages>
   </template>
 
   <script>
@@ -95,75 +111,146 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           value: null
         },
+        selectedProject: Object,
         projects: {
           type: Array,
           value: [
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
+              showcase_image: '/images/projects/Baghdad_Olympics/01.jpg',
+              images: [
+                { image: '/images/projects/Baghdad_Olympics/01.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/02.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/03.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/04.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/05.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/06.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/07.jpg', size: '24%' },
+                { image: '/images/projects/Baghdad_Olympics/08.jpg', size: '24%' }
+              ],
               width: '100%',
               layout: 'horizontal',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              title: 'Baghdad Olympics',
+              description: "Baghdad 2040 Olympics is a virtual project dipicting the brand and visual identity of the olympic games if they were to be hosted in Baghdad in 2040, including concepts and pictograms along with several unconventional advertisement posters.",
               description_size: '30%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
+              showcase_image: '/images/projects/Lego_SpraynPlay/00.jpg',
+              images: [
+                { image: '/images/projects/Lego_SpraynPlay/00.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/01.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/02.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/03.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/04.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/05.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/06.jpg', size: '24%' },
+                { image: '/images/projects/Lego_SpraynPlay/07.jpg', size: '24%' }
+              ],
+              width: '32%',
               layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              title: 'Spray n\' Play',
+              description: "The concept behind this advertising/marketing campaign does not only promote LEGOs mission statement, ìInspire and develop the builders of tomorrow but also provokes consumers to initiate a referral network marketing campaign. The main idea was to ignite a promotional event that is of such simplicity to impact consumers themselves to spread exposure. The subjects are to get a construction block, doesn’t matter the size. However, the bigger the better. With the use of spray paint (or any other form of paint) the subjects are to paint the construction block then get a free LEGO Spray n’ Play sticker from the nearest Lego distributer, stick it on the block, take photos of the painted block with the sticker in an interesting spot, post the photo on facebook with the hashtag #spraynplay and the subject with an interesting photo would be contacted to receive a gift from LEGO.",
               description_size: '30%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
+              showcase_image: '/images/projects/Man_vs_Nature_Narration/0.jpg',
+              images: [
+                { image: '/images/projects/Man_vs_Nature_Narration/0.jpg', size: '100%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/1.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/2.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/3.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/4.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/5.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/6.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/7.jpg', size: '24%' },
+                { image: '/images/projects/Man_vs_Nature_Narration/8.jpg', size: '24%' }
+              ],
+              width: '32%',
               layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-              description_size: '30%'
+              title: 'Man vs Nature Narration',
+              description: "",
+              description_size: '4%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
+              showcase_image: '/images/projects/Youth_Knowledge_Forum/1.jpg',
+              images: [
+                { image: '/images/projects/Youth_Knowledge_Forum/1.jpg', size: '24%' },
+                { image: '/images/projects/Youth_Knowledge_Forum/2.jpg', size: '24%' },
+                { image: '/images/projects/Youth_Knowledge_Forum/3.jpg', size: '24%' },
+                { image: '/images/projects/Youth_Knowledge_Forum/4.jpg', size: '24%' },
+                { image: '/images/projects/Youth_Knowledge_Forum/5.jpg', size: '49%' },
+                { image: '/images/projects/Youth_Knowledge_Forum/6.jpg', size: '49%' }
+              ],
+              width: '32%',
               layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              title: 'Youth Knowledge Forum',
+              description: "Youth Knowledge Forum is an annual activity presented by Majdi Bukhari International that takes place in Al-Madinah in Saudi Arabia. The forum promotes several subjects to the youth in different fields, including Mobile Applications, Cloud Computing, Virtual Reality and 3D printing. It also focuses on the evolving the Information Technology sector in Al-Madinah in regard to shifting the IT community and covers the most modern practices in the field. The work involved the creation of the event brand, advertising concepts and posters, in addition to the design elements inside the forum.",
               description_size: '30%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
-              layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-              description_size: '30%'
-            },
-            {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '49.35%',
+              showcase_image: '/images/projects/G12_Line/01.jpg',
+              images: [
+                { image: '/images/projects/G12_Line/01.jpg', size: '100%' },
+                { image: '/images/projects/G12_Line/02.jpg', size: '24%' },
+                { image: '/images/projects/G12_Line/03.jpg', size: '24%' },
+                { image: '/images/projects/G12_Line/04.jpg', size: '24%' },
+                { image: '/images/projects/G12_Line/05.jpg', size: '24%' }
+              ],
+              width: '49%',
               layout: 'horizontal',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              title: 'G12 Line',
+              description: "G12 T-Shirt Line is a virtual clothing line brand, designing funky high quality T-Shirts, The brand identity focuses on being up-to-date with the youth scene trends. G12 also provides the service of printing custom designs on T-Shirts.",
               description_size: '30%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
-              layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              showcase_image: '/images/projects/Wahj_Mall/01.jpg',
+              images: [
+                { image: '/images/projects/Wahj_Mall/01.jpg', size: '49%' },
+                { image: '/images/projects/Wahj_Mall/02.jpg', size: '49%' },
+                { image: '/images/projects/Wahj_Mall/03.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/04.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/05.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/06.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/07.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/08.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/09.jpg', size: '24%' },
+                { image: '/images/projects/Wahj_Mall/10.jpg', size: '24%' }
+              ],
+              width: '49%',
+              layout: 'horizontal',
+              title: 'Wahj Mall',
+              description: "As Ludwig Mies van der Rohe has stated ‘Less is more’. The Seagram Building located in Park Avenue is a reflection of simplicity and integrity in form and structure. Wahj Mall combines the international style through Mies’ modern stylistic movement and the luxury depicted in the of simplicity of design, for the customers to be in an environment that would amplify the ultimate shopping experience. The virtual work involved the creation of the brand, and the signage inside the building.",
               description_size: '30%'
             },
             {
-              showcase_image: '/images/projects/aston-martin.jpg',
-              width: '24%',
-              layout: 'vertical',
-              title: 'Aston Martin Vanquish',
-              description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              showcase_image: '/images/projects/Electronic_Services_Forum/1.jpg',
+              images: [
+                { image: '/images/projects/Electronic_Services_Forum/1.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/2.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/3.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/4.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/5.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/6.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/7.jpg', size: '24%' },
+                { image: '/images/projects/Electronic_Services_Forum/8.jpg', size: '24%' }
+              ],
+              width: '100%',
+              layout: 'horizontal',
+              title: 'Electronic Services Forum',
+              description: "Electronic Services Forum is an annual activity presented by Majdi Bukhari International that takes place in Al-Madinah in Saudi Arabia. The forum discusses E-Commerce and E-Governmental Services for both individuals and businesses. It also focuses on the implementation of a technological and legal infrastructure in order to launch these services. The work involved the creation of the event brand, in addition to the design elements inside the forum.",
               description_size: '30%'
-            },
+            }
           ]
         }
+      },
+
+      listeners: {
+        'open-project': 'openProject'
+      },
+
+      openProject: function(e) {
+        this.selectedProject = e.detail.project;
+        this.set('route.path', '/project');
+        this.$.project.reloadProject();
       },
 
       ready: function() {

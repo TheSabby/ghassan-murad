@@ -9,15 +9,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="clients-view">
   <template>
-    <style>
+    <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
       }
+
+      .container {
+        height: calc(100vh - 69px);
+      }
+
+      .client-image {
+        width: 180px;
+        height: 180px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 20px;
+      }
     </style>
 
+    <div class="container vertical layout center-center">
+      <div class="images horizontal layout center-center">
+        <div class="client-image" style="background-image: url(/images/clients/Barista.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/CMJ.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/Codeadore.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/Jadal.png)"></div>
+      </div>
+      <div class="images horizontal layout center-center">
+        <div class="client-image" style="background-image: url(/images/clients/MB.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/Onglobe.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/Triangle.png)"></div>
+        <div class="client-image" style="background-image: url(/images/clients/Yazan.png)"></div>
+      </div>
+    </div>
 
   </template>
 

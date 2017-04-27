@@ -9,15 +9,99 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="offers-view">
   <template>
-    <style>
+    <style include="iron-flex iron-flex-alignment iron-flex-factors">
       :host {
         display: block;
       }
+
+      .container {
+        height: calc(100vh - 69px);
+      }
+
+      .offer {
+        width: 300px;
+        height: 430px;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+        background-color: #000;
+        color: #fff;
+      }
+
+      .offer-title {
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-weight: bolder;
+        font-size: 4rem;
+        line-height: 3.1rem;
+        text-transform: uppercase;
+        text-align: right;
+      }
+
+      .offer-desc {
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-weight: bolder;
+        font-size: 1.5rem;
+        line-height: 1.3rem;
+        text-transform: uppercase;
+        margin-top: 30px;
+      }
+
+      .smaller {
+        font-size: 0.8rem;
+        line-height: 0.5rem;
+      }
+
+      .price {
+        font-size: 2rem;
+        line-height: 1rem;
+        margin-right: 2px;
+        margin-top: 8px;
+      }
     </style>
 
+    <div class="container horizontal layout center-center">
+      <div class="offer vertical layout">
+        <div class="offer-title">Premium Brand Package</div>
+        <div class="offer-desc">
+          + BRAND IDENTITY<br />
+          + 2 MARKETING CONCEPTS<br />
+          + 3 PROMO ADS<br />
+          + COPYWRITING<br />
+          + INTERIOR DESIGN<br />
+          + PRINT MATERIAL<br />
+          + SOCIAL MEDIA CONTENT<br />
+          + WEB DESIGN<br />
+          + WEB DEVELOPMENT
+        </div>
+        <span class="flex"></span>
+        <div class="offer-desc smaller">Starting At</div>
+        <div class="offer-desc price"><span class="price">4,000</span><span class="smaller">Jod</span></div>
+      </div>
+      <div class="offer vertical layout">
+        <div class="offer-title">Premium Advert Package</div>
+        <div class="offer-desc">
+          + 3 MARKETING CONCEPTS<br />
+          + 2 PROMO ADS<br />
+          + COPYWRITING<br />
+          + SOCIAL MEDIA CONTENT
+        </div>
+        <span class="flex"></span>
+        <div class="offer-desc smaller">Starting At</div>
+        <div class="offer-desc price"><span class="price">1,200</span><span class="smaller">Jod</span></div>
+      </div>
+      <div class="offer vertical layout">
+        <div class="offer-title">Tailored Design Package</div>
+        <div class="offer-desc">
+          + CUSTOM TO NEEDS<br />
+          + CONSULTAION
+        </div>
+        <span class="flex"></span>
+      </div>
+    </div>
 
   </template>
 

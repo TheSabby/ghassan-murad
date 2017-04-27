@@ -1,0 +1,30 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/Cellar/node/7.4.0/bin/node /usr/local/Cellar/node/7.4.0/libexec/npm/bin/firebase deploy
+[debug] CLI Version:  3.6.1
+[debug] Platform:     darwin
+[debug] Node Version: v7.4.0
+[debug] Time:         Thu Apr 27 2017 18:56:10 GMT+0300 (EEST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/ghassan-murad  
+ Thu Apr 27 2017 18:56:10 GMT+0300 (EEST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/ghassan-murad/tokens  
+ Thu Apr 27 2017 18:56:11 GMT+0300 (EEST)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'ghassan-murad'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing  directory for upload...
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/wLJcgdudFAxj_sfwGtwF6DcWaOy9fpkRP8s4n4mH_-g',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Apr 27 2017 18:56:25 GMT+0300 (EEST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/ghassan-murad/uploads/-Kik77hgwXh7_HtAitos?fileCount=2455&message=  
+ Thu Apr 27 2017 18:56:26 GMT+0300 (EEST)

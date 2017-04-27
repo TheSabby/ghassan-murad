@@ -1,0 +1,100 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+
+<dom-module id="project-view">
+  <template>
+    <style include="iron-flex iron-flex-alignment iron-flex-factors">
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .container {
+        margin-top: 30px;
+      }
+
+      .description-area {
+        padding: 20px;
+      }
+
+      .title {
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-weight: bolder;
+        line-height: 5rem;
+        font-size: 5rem;
+      }
+
+      .description {
+        margin-top: 25px;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+      }
+
+      .images {
+        padding: 20px;
+      }
+
+      .project-image {
+        background-color: #fff;
+        border-radius: 3px;
+        height: 200px;
+        margin-bottom: 20px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    </style>
+
+    <div class="container horizontal layout start">
+      <div class="description-area vertical layout flex">
+        <div class="title">{{projectTitle}}</div>
+        <div class="description">{{projectDescription}}</div>
+      </div>
+      <div id="images" class="images horizontal layout wrap justified flex-2"></div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'project-view',
+
+      properties: {
+        project: Object,
+        projectTitle: String,
+        projectDescription: String,
+        projectImage: String,
+        projectImages: Array
+      },
+
+      reloadProject: function() {
+        var project = this;
+        project.projectTitle = project.project.projectTitle;
+        project.projectDescription = project.project.description;
+        project.projectImage = project.project.showcaseImage;
+        project.projectImages = project.project.projectImages;
+
+        Polymer.dom(project.$.images).innerHTML = '';
+        project.projectImages.forEach(function(image) {
+          var paper = document.createElement('paper-material');
+          paper.elevation = '1';
+          paper.className = 'project-image';
+          paper.style.backgroundImage = 'url(' + image.image + ')';
+          paper.style.width = image.size;
+          Polymer.dom(project.$.images).appendChild(paper);
+        });
+      }
+    });
+  </script>
+</dom-module>

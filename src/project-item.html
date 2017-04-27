@@ -40,11 +40,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 30px;
         padding: 16px;
         overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .title-text {
         font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: 500;
+        font-weight: bold;
         font-size: 1.7rem;
         margin-bottom: 20px;
       }
@@ -65,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       animated>
       <div id="image" class="image flex"></div>
       <div id="description" class="description vertical layout">
-        <div class="title-text">{{projectTitle}}</div>
+        <div id="title" class="title-text">{{projectTitle}}</div>
         <div class="main-text">{{description}}</div>
       </div>
     </paper-material>
@@ -82,6 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         projectTitle: String,
         description: String,
         descriptionSize: String,
+        projectImages: Array
       },
 
       factoryImpl: function(project) {
@@ -91,12 +93,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.projectTitle = project.title;
         this.description = project.description;
         this.descriptionSize = project.description_size;
+        this.projectImages = project.images;
 
         this.renderProject();
       },
 
       openProject: function() {
-        this.fire('project-clicked', {project: this});
+        this.fire('open-project', {project: this});
       },
 
       renderProject: function() {
@@ -109,6 +112,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           $(this.$.image).css('border-bottom-left-radius', '3px');
         } else {
           $(this.$.container).addClass('vertical');
+          if(!this.description.length) {
+            $(this.$.title).css('text-align', 'center');
+          }
           $(this.$.description).css('height', this.descriptionSize);
           $(this.$.image).css('border-top-left-radius', '3px');
           $(this.$.image).css('border-top-right-radius', '3px');

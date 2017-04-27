@@ -69,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       	justify-content: center;
       	align-items: center;
       	transition: width 0.2s;
+        background-color: #000;
       }
 
       .socket {
@@ -191,6 +192,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             animation.$.box.style.width = '220px';
             animation.$.enter.style.opacity = '0';
           });
+          localStorage.setItem('viewed-entry', 'true');
     		}, 2000);
       }
     });
