@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
 
 <link rel="import" href="entry-animation.html">
 
@@ -102,13 +103,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-primary-color);
       }
 
-      .large-dialog {
+      .large-image {
         width: 90vw;
         height: 90vh;
         background-position: center;
         background-size: contain;
         background-color: #000;
         background-repeat: no-repeat;
+      }
+
+      .large-video {
+        background-color: #000;
       }
     </style>
 
@@ -157,8 +162,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-header-layout>
     </iron-pages>
 
-    <paper-dialog id="largeImage" class="large-dialog" with-backdrop fit></paper-dialog>
-    <paper-dialog id="largeVideo" class="large-dialog" with-backdrop fit></paper-dialog>
+    <paper-dialog id="largeImage" class="large-image" with-backdrop fit></paper-dialog>
+    <paper-dialog
+      id="largeVideo"
+      class="large-video vertical layout center-center"
+      on-iron-overlay-closed="stopVideo"
+      with-backdrop
+      fit>
+      <google-youtube
+        id="video"
+        video-id="[[youtubeID]]"
+        rel="0"
+        width="[[youtubeWidthText]]"
+        height="[[youtubeHeightText]]"
+        autoplay="0">
+      </google-youtube>
+    </paper-dialog>
   </template>
 
   <script>
@@ -178,7 +197,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         dropdownMenuShown: {
           type: Boolean,
           value: false
-        }
+        },
+        youtubeID: {
+          type: String,
+          value: ''
+        },
+        youtubeWidth: {
+          type: Number,
+          value: function() {
+            var width = +document.documentElement.clientWidth - 40;
+            var height = Math.ceil((width / 16) * 9);
+            if((height + 40) > document.documentElement.clientHeight) {
+              height = +document.documentElement.clientHeight - 40;
+              width = Math.ceil((height / 9) * 16);
+            }
+            return width;
+          },
+          observer: 'youtubeWidthSet'
+        },
+        youtubeHeight: {
+          type: Number,
+          value: 540
+        },
+        youtubeWidthText: String,
+        youtubeHeightText: String
       },
 
       observers: [
@@ -187,7 +229,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       listeners: {
         'enter-site': 'enterSite',
-        'open-large-image': 'openLargeImage'
+        'open-large-image': 'openLargeImage',
+        'open-large-video': 'openLargeVideo'
       },
 
       _routePageChanged: function(page) {
@@ -245,6 +288,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var image = e.detail.image;
         this.$.largeImage.style.backgroundImage = 'url(' + image + ')';
         this.$.largeImage.open();
+      },
+
+      openLargeVideo: function(e) {
+        var video = e.detail.video;
+        this.youtubeID = video;
+        this.$.largeVideo.open();
+        this.$.video.play();
+      },
+
+      youtubeWidthSet: function() {
+        this.youtubeWidthText = this.youtubeWidth + 'px';
+        this.youtubeHeight = Math.ceil((this.youtubeWidth / 16) * 9);
+        this.youtubeHeightText = this.youtubeHeight + 'px';
+        this.$.video.style.margin = 0;
+        this.$.video.style.padding = 0;
+      },
+
+      stopVideo: function() {
+        this.$.video.pause();
       }
     });
   </script>

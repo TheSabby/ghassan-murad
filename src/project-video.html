@@ -1,0 +1,114 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+
+<dom-module id="project-video">
+  <template>
+    <style include="iron-flex iron-flex-alignment iron-flex-factors">
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .container {
+        position: relative;
+        margin: 10px 0;
+        background-color: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        height: 340px;
+        width: 100%;
+      }
+
+      .image {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #cdcdcd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+      }
+
+      .description {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 15px 0;
+        background-color: rgba(0,0,0,0.7);
+        color: #fff;
+        text-align: center;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+
+      .title-text {
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-weight: bold;
+        font-size: 1.7rem;
+        text-align: center;
+      }
+    </style>
+    <paper-material
+      id="container"
+      class="container layout vertical"
+      elevation="1"
+      on-click="openVideo"
+      on-mouseenter="raise"
+      on-mouseleave="lower"
+      animated>
+      <div id="image" class="image flex"></div>
+      <div id="description" class="description">
+        <div id="title" class="title-text">{{projectTitle}}</div>
+      </div>
+    </paper-material>
+  </template>
+
+  <script>
+    ProjectVideo = Polymer({
+      is: 'project-video',
+
+      properties: {
+        showcaseImage: String,
+        projectWidth: String,
+        projectTitle: String,
+        video: String
+      },
+
+      factoryImpl: function(project) {
+        this.showcaseImage = project.showcase_image;
+        this.projectWidth = project.width;
+        this.projectTitle = project.title;
+        this.video = project.video_url;
+
+        this.renderProject();
+      },
+
+      openVideo: function() {
+        this.fire('open-large-video', { video: this.video });
+      },
+
+      renderProject: function() {
+        $(this).css('width', this.projectWidth);
+        $(this.$.image).css('background-image', 'url(' + this.showcaseImage + ')');
+      },
+
+      raise: function() {
+        this.$.container.elevation = 4;
+      },
+
+      lower: function() {
+        this.$.container.elevation = 1;
+      }
+    });
+  </script>
+</dom-module>

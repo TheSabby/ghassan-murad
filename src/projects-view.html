@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="import" href="project-item.html">
+<link rel="import" href="project-video.html">
 <link rel="import" href="project-view.html">
 
 <dom-module id="projects-view">
@@ -116,6 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           value: [
             {
+              type: 'project-page',
               showcase_image: '/images/projects/Baghdad_Olympics/01.jpg',
               images: [
                 { image: '/images/projects/Baghdad_Olympics/01.jpg', size: '24%' },
@@ -134,6 +136,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '30%'
             },
             {
+              type: 'project-video',
+              video_url: 'VMyqus2UnxM',
+              showcase_image: '',
+              width: '32%',
+              title: 'Yazan Haifawy - Aman Aman'
+            },
+            {
+              type: 'project-video',
+              video_url: 'pexn6Q1yjYU',
+              showcase_image: '',
+              width: '32%',
+              title: 'Barista Nitro Cold Brew Coffee'
+            },
+            {
+              type: 'project-video',
+              video_url: '8_PlIBfPF_Y',
+              showcase_image: '',
+              width: '32%',
+              title: 'Confused App Promo'
+            },
+            {
+              type: 'project-page',
               showcase_image: '/images/projects/Lego_SpraynPlay/00.jpg',
               images: [
                 { image: '/images/projects/Lego_SpraynPlay/00.jpg', size: '24%' },
@@ -152,6 +176,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '30%'
             },
             {
+              type: 'project-page',
               showcase_image: '/images/projects/Man_vs_Nature_Narration/0.jpg',
               images: [
                 { image: '/images/projects/Man_vs_Nature_Narration/0.jpg', size: '100%' },
@@ -171,6 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '4%'
             },
             {
+              type: 'project-page',
               showcase_image: '/images/projects/Youth_Knowledge_Forum/1.jpg',
               images: [
                 { image: '/images/projects/Youth_Knowledge_Forum/1.jpg', size: '24%' },
@@ -187,6 +213,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '30%'
             },
             {
+              type: 'project-video',
+              video_url: '_b6TcXfLKlc',
+              showcase_image: '',
+              width: '49%',
+              title: 'Jadal Kanz'
+            },
+            {
+              type: 'project-video',
+              video_url: 'LIWMTrInE0Y',
+              showcase_image: '',
+              width: '49%',
+              title: 'Jadal - Mish Hadol Nasak'
+            },
+            {
+              type: 'project-page',
               showcase_image: '/images/projects/G12_Line/01.jpg',
               images: [
                 { image: '/images/projects/G12_Line/01.jpg', size: '100%' },
@@ -202,6 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '30%'
             },
             {
+              type: 'project-page',
               showcase_image: '/images/projects/Wahj_Mall/01.jpg',
               images: [
                 { image: '/images/projects/Wahj_Mall/01.jpg', size: '49%' },
@@ -222,6 +264,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               description_size: '30%'
             },
             {
+              type: 'project-page',
               showcase_image: '/images/projects/Electronic_Services_Forum/1.jpg',
               images: [
                 { image: '/images/projects/Electronic_Services_Forum/1.jpg', size: '24%' },
@@ -238,6 +281,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               title: 'Electronic Services Forum',
               description: "Electronic Services Forum is an annual activity presented by Majdi Bukhari International that takes place in Al-Madinah in Saudi Arabia. The forum discusses E-Commerce and E-Governmental Services for both individuals and businesses. It also focuses on the implementation of a technological and legal infrastructure in order to launch these services. The work involved the creation of the event brand, in addition to the design elements inside the forum.",
               description_size: '30%'
+            },
+            {
+              type: 'project-video',
+              video_url: '0_btxzHnCUk',
+              showcase_image: '',
+              width: '49%',
+              title: 'Pill In Ibiza'
+            },
+            {
+              type: 'project-video',
+              video_url: 'amprNk-mnvc',
+              showcase_image: '',
+              width: '49%',
+              title: 'Supercharge'
             }
           ]
         }
@@ -257,7 +314,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var view = this;
 
         view.projects.forEach(function(project) {
-          project = new ProjectItem(project);
+          if(project.type == 'project-video') {
+            project = new ProjectVideo(project);
+          } else {
+            project = new ProjectItem(project);
+          }
           Polymer.dom(view.$.projects).appendChild(project);
         });
 
