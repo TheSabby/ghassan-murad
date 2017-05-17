@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 
 <link rel="import" href="entry-animation.html">
 
@@ -100,6 +101,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: var(--app-background-color);
         color: var(--app-primary-color);
       }
+
+      .large-dialog {
+        width: 90vw;
+        height: 90vh;
+        background-position: center;
+        background-size: contain;
+        background-color: #000;
+        background-repeat: no-repeat;
+      }
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -146,6 +156,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
     </iron-pages>
+
+    <paper-dialog id="largeImage" class="large-dialog" with-backdrop fit></paper-dialog>
+    <paper-dialog id="largeVideo" class="large-dialog" with-backdrop fit></paper-dialog>
   </template>
 
   <script>
@@ -173,7 +186,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       listeners: {
-        'enter-site': 'enterSite'
+        'enter-site': 'enterSite',
+        'open-large-image': 'openLargeImage'
       },
 
       _routePageChanged: function(page) {
@@ -225,6 +239,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           $(this.$.dropdown_menu).css('height', '0');
           this.dropdownMenuShown = false;
         }
+      },
+
+      openLargeImage: function(e) {
+        var image = e.detail.image;
+        this.$.largeImage.style.backgroundImage = 'url(' + image + ')';
+        this.$.largeImage.open();
       }
     });
   </script>

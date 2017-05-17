@@ -12,6 +12,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 
+<link rel="import" href="project-image.html">
+
 <dom-module id="project-view">
   <template>
     <style include="iron-flex iron-flex-alignment iron-flex-factors">
@@ -45,16 +47,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .images {
         padding: 20px;
       }
-
-      .project-image {
-        background-color: #fff;
-        border-radius: 3px;
-        height: 200px;
-        margin-bottom: 20px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
     </style>
 
     <div class="container horizontal layout start">
@@ -87,12 +79,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         Polymer.dom(project.$.images).innerHTML = '';
         project.projectImages.forEach(function(image) {
-          var paper = document.createElement('paper-material');
-          paper.elevation = '1';
-          paper.className = 'project-image';
-          paper.style.backgroundImage = 'url(' + image.image + ')';
-          paper.style.width = image.size;
-          Polymer.dom(project.$.images).appendChild(paper);
+          image = new ProjectImage(image.image, image.size);
+          Polymer.dom(project.$.images).appendChild(image);
         });
       }
     });
