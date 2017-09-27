@@ -78,7 +78,7 @@
           project_path +
           '%2F' +
           image +
-          '?alt=media';
+          '_thumb.png?alt=media';
       }
 
       raise() {
@@ -93,7 +93,7 @@
         this.dispatchEvent(new CustomEvent('open-large-image', {
           bubbles: true,
           composed: true,
-          detail: { image: this.image }
+          detail: { image: this.image.replace('_thumb.png', '') }
         }));
       }
     }
