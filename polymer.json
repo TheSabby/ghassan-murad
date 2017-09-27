@@ -1,25 +1,32 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/ghassan-murad.html",
+  "shell": "src/app-shell.html",
   "fragments": [
-    "src/home-view.html",
-    "src/clients-view.html",
-    "src/contact-view.html",
-    "src/not-found-view.html",
-    "src/offers-view.html",
     "src/projects-view.html",
-    "src/project-item.html"
+    "src/clients-view.html",
+    "src/offers-view.html",
+    "src/careers-view.html",
+    "src/contact-view.html",
+    "src/not-found-view.html"
   ],
-  "sourceGlobs": [
-    "src/**/*",
-    "images/**/*",
-    "fonts/**/*",
-    "js/**/*",
-    "bower.json"
-  ],
-  "includeDependencies": [
+  "sources": ["src/**/*", "images/**/*", "fonts/**/*", "bower.json"],
+  "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
-    "bower_components/jquery/dist/jquery.min.js"
+    "bower_components/webcomponentsjs/*.js",
+    "bower_components/typed.js/lib/*.js"
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  },
+  "builds": [
+    {
+      "preset": "es5-bundled"
+    },
+    {
+      "preset": "es6-bundled"
+    },
+    {
+      "preset": "es6-unbundled"
+    }
   ]
 }

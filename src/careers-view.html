@@ -1,72 +1,84 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="careers-view">
   <template>
-    <style include="iron-flex iron-flex-alignment iron-flex-factors">
-      :host {
+    <style include="iron-flex iron-flex-alignment">
+       :host {
         display: block;
       }
 
       .container {
-        height: calc(100vh - 69px);
-      }
-
-      .column {
+        max-width: 1024px;
+        height: calc(100vh - 64px);
+        margin: 0 auto;
         font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: bolder;
-        font-size: 3.5rem;
-        line-height: 2.8rem;
         text-transform: uppercase;
-        text-align: right;
-        margin: 20px;
-        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 3rem;
+        color: #fff;
+        line-height: 2.4rem;
       }
 
-      .contained {
-        font-size: 1.8rem;
-        line-height: 5rem;
-        color: #fff;
-        background-color: #000;
-        padding: 0px 10px;
+      .side {
+        margin: 0 5px;
+        width: calc(50% - 10px);
+      }
+
+      .left-side {
+        text-align: right;
+      }
+
+      .right-side {
+        align-items: flex-start;
+      }
+
+      .contained-elem {
+        font-size: 1.4rem;
+        line-height: 2rem;
+        padding: 5px 10px;
+        display: inline-block;
+        background-color: #fff;
+        color: #000;
+        margin-top: 5px;
+      }
+
+      @media only screen and (max-width: 1024px) {
+        .side {
+          width: 100%;
+          text-align: center;
+          align-items: center;
+        }
       }
     </style>
 
-    <div class="container horizontal layout center-center">
-      <div class="column">
-        BE A PART OF<br />
-        CARVING<br />
-        THE FUTURE OF<br />
-        + ADVERTISING<br />
-        + BRANDING<br />
-        + DESIGN<br />
-        + WEB DEVELOPMENT<br />
-        + FILM MAKING
+    <div class="container horizontal layout wrap center">
+      <div class="left-side side vertical layout">
+        <div class="side-elem">BE A PART OF</div>
+        <div class="side-elem">CARVING</div>
+        <div class="side-elem">THE FUTURE OF</div>
+        <div class="side-elem">+ ADVERTISING</div>
+        <div class="side-elem">+ BRANDING</div>
+        <div class="side-elem">+ DESIGN</div>
+        <div class="side-elem">+ WEB DEVELOPMENT</div>
+        <div class="side-elem">+ FILM MAKING</div>
       </div>
-      <div class="column" style="text-align: left">
-        WE OFFER YOU PROJECT BASED<br />
-        OPPORTUNITIES.<br />
-        SEND US YOUR CV AND<br />
-        JOIN OUR TEAM.<br />
-        <span class="contained">contact@ghassanmurad.com<br />
+      <div class="right-side side vertical layout">
+        <div class="side-elem">WE OFFER YOU PROJECT BASED</div>
+        <div class="side-elem">OPPORTUNITIES.</div>
+        <div class="side-elem">SEND US YOUR CV AND</div>
+        <div class="side-elem">JOIN OUR TEAM.</div>
+        <div class="contained-elem">CONTACT@GHASSANMURAD.COM</div>
       </div>
     </div>
-
   </template>
 
   <script>
-    Polymer({
-      is: 'careers-view',
-    });
+    class CareersView extends Polymer.Element {
+      static get is() { return 'careers-view'; }
+    }
+
+    window.customElements.define(CareersView.is, CareersView);
   </script>
 </dom-module>

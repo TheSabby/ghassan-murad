@@ -1,69 +1,81 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="contact-view">
   <template>
-    <style include="iron-flex iron-flex-alignment iron-flex-factors">
-      :host {
+    <style include="iron-flex iron-flex-alignment">
+       :host {
         display: block;
       }
 
       .container {
-        height: calc(100vh - 69px);
-      }
-
-      .column {
+        max-width: 1024px;
+        height: calc(100vh - 64px);
+        margin: 0 auto;
         font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: bolder;
-        font-size: 3.5rem;
-        line-height: 2.8rem;
         text-transform: uppercase;
-        text-align: right;
-        margin: 20px;
-        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 3rem;
+        color: #fff;
+        line-height: 2.4rem;
       }
 
-      .contained {
+      .side {
+        margin: 0 5px;
+        width: calc(50% - 10px);
+      }
+
+      .left-side {
+        text-align: right;
+      }
+
+      .right-side {
+        align-items: flex-start;
+      }
+
+      .contained-elem {
         font-size: 1.4rem;
         line-height: 2rem;
-        color: #fff;
-        background-color: #000;
-        padding: 0px 10px;
+        padding: 5px 10px;
+        display: inline-block;
+        background-color: #fff;
+        color: #000;
+        margin-top: 5px;
+      }
+
+      @media only screen and (max-width: 1024px) {
+        .side {
+          width: 100%;
+          text-align: center;
+          align-items: center;
+        }
       }
     </style>
 
-    <div class="container horizontal layout center-center">
-      <div class="column">
-        IF YOU HAVE A<br />
-        + SUGGESTION<br />
-        + PROPOSITION<br />
-        + COMMENT<br />
-        + ENQUIRY
+    <div class="container horizontal layout wrap center">
+      <div class="left-side side vertical layout">
+        <div class="side-elem">IF YOU HAVE A</div>
+        <div class="side-elem">+ SUGGESTION</div>
+        <div class="side-elem">+ PROPOSITION</div>
+        <div class="side-elem">+ COMMENT</div>
+        <div class="side-elem">+ ENQUIRY</div>
       </div>
-      <div class="column" style="text-align: left">
-        YOU CAN ALWAYS<br />
-        CONTACT US<br />
-        <span class="contained">contact@ghassanmurad.com</span><br />
-        <span class="contained">fb.com/ghassanmuradJO</span><br />
-        <span class="contained">+962 79 64 99 128</span>
+      <div class="right-side side vertical layout">
+        <div class="side-elem">YOU CAN ALWAYS</div>
+        <div class="side-elem">CONTACT US</div>
+        <div class="contained-elem">CONTACT@GHASSANMURAD.COM</div>
+        <div class="contained-elem">FB.COM/GHASSANMURADJO</div>
+        <div class="contained-elem">+962 79 64 99 128</div>
       </div>
     </div>
-
   </template>
 
   <script>
-    Polymer({
-      is: 'contact-view',
-    });
+    class ContactView extends Polymer.Element {
+      static get is() { return 'contact-view'; }
+    }
+
+    window.customElements.define(ContactView.is, ContactView);
   </script>
 </dom-module>

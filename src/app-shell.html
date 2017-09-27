@@ -1,0 +1,228 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="lazy-import" href="projects-view.html">
+<link rel="lazy-import" href="clients-view.html">
+<link rel="lazy-import" href="offers-view.html">
+<link rel="lazy-import" href="careers-view.html">
+<link rel="lazy-import" href="contact-view.html">
+<link rel="lazy-import" href="not-found-view.html">
+
+<dom-module id="app-shell">
+  <template>
+    <style include="iron-flex">
+       :host {
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-header {
+        font-family: square;
+        color: #000;
+        background-color: var(--app-primary-color);
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      .logo {
+        height: 30px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .title {
+        cursor: pointer;
+      }
+
+      .page-link {
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-size: 1rem;
+        color: #000;
+        text-decoration: none;
+        margin: 0 15px;
+      }
+
+      .page-link:visited {
+        color: #000;
+      }
+
+      .large-image {
+        width: 90vw;
+        height: 90vh;
+        background-position: center;
+        background-size: contain;
+        background-color: #000;
+        background-repeat: no-repeat;
+      }
+    </style>
+
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed narrow="{{narrow}}" force-narrow>
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="projects" href="[[rootPath]]projects">Projects</a>
+          <a name="clients" href="[[rootPath]]clients">Clients</a>
+          <a name="offers" href="[[rootPath]]offers">Offers</a>
+          <a name="careers" href="[[rootPath]]careers">Careers</a>
+          <a name="contact" href="[[rootPath]]contact">Contact</a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout id="headerLayout" has-scrolling-region>
+
+        <app-header slot="header" reveals effects="waterfall">
+          <app-toolbar>
+            <div hidden$="[[wideLayout]]">
+              <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            </div>
+            <img class="logo" src="../images/black-logo.svg" on-click="openProjects" />
+            <div class="title" on-click="openProjects">Ghassan Murad</div>
+            <span class="flex"></span>
+            <div class="page-links" hidden$="[[!wideLayout]]">
+              <a class="page-link" href="[[rootPath]]projects">Projects</a>
+              <a class="page-link" href="[[rootPath]]clients">Clients</a>
+              <a class="page-link" href="[[rootPath]]offers">Offers</a>
+              <a class="page-link" href="[[rootPath]]careers">Careers</a>
+              <a class="page-link" href="[[rootPath]]contact">Contact</a>
+            </div>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="not-found" role="main">
+          <projects-view route="{{subroute}}" name="projects"></projects-view>
+          <clients-view name="clients"></clients-view>
+          <offers-view name="offers"></offers-view>
+          <careers-view name="careers"></careers-view>
+          <contact-view name="contact"></contact-view>
+          <not-found-view name="not-found"></not-found-view>
+        </iron-pages>
+      </app-header-layout>
+
+      <paper-dialog id="largeImage" class="large-image" fit></paper-dialog>
+    </app-drawer-layout>
+
+    <iron-media-query query="min-width: 1024px" query-matches="{{wideLayout}}"></iron-media-query>
+  </template>
+
+  <script>
+    class AppShell extends Polymer.Element {
+      static get is() { return 'app-shell'; }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+          routeData: Object,
+          subroute: String,
+          // This shouldn't be neccessary, but the Analyzer isn't picking up
+          // Polymer.Element#rootPath
+          rootPath: String,
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      _routePageChanged(page) {
+        // If no page was found in the route data, page will be an empty string.
+        // Deault to 'view1' in that case.
+        this.page = page || 'projects';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl(page + '-view.html');
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._showPage404.bind(this),
+          true);
+      }
+
+      _showPage404() {
+        this.page = 'not-found';
+      }
+
+      ready() {
+        super.ready();
+        window.addEventListener('location-changed', () => this.$.headerLayout.scrollTo(0, 0));
+        window.addEventListener('open-large-image', (e) => this.openLargeImage(e));
+      }
+
+      openLargeImage(e) {
+        var image = e.detail.image;
+        this.$.largeImage.style.backgroundImage = 'url(' + image + ')';
+        this.$.largeImage.open();
+      }
+
+      openProjects() {
+        window.history.pushState({}, null, '/projects/list');
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+    }
+
+    window.customElements.define(AppShell.is, AppShell);
+  </script>
+</dom-module>

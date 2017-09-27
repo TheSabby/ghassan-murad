@@ -2,7 +2,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 
-<dom-module id="project-image">
+<dom-module id="project-tile">
   <template>
     <style include="iron-flex iron-flex-alignment">
        :host {
@@ -37,40 +37,48 @@
       }
     </style>
 
-    <paper-material id="container" class="container paper-material" elevation="0" on-mouseover="raise" on-mouseout="lower" on-click="openImage"
+    <paper-material id="container" class="container paper-material" elevation="0" on-mouseover="raise" on-mouseout="lower" on-click="openProject"
       animated></paper-material>
   </template>
 
   <script>
-    class ProjectImage extends Polymer.Element {
-      static get is() { return 'project-image'; }
+    class ProjectTile extends Polymer.Element {
+      static get is() { return 'project-tile'; }
 
       static get properties() {
         return {
-          image: String,
+          projectId: Number,
+          type: String,
+          showcaseImage: String,
+          title: String,
+          layout: String,
           width: String,
           height: String
         };
       }
 
-      constructor(storage_path, project_image) {
+      constructor(id, project) {
         super();
-        this.image = this.getDownloadURL(storage_path, project_image.image);
-        this.width = project_image.width;
-        this.height = project_image.height;
+        this.projectId = id;
+        this.type = project.type;
+        this.title = project.title;
+        this.showcaseImage = this.getDownloadURL(project.storage_path, project.showcase_image);
+        this.layout = project.layout;
+        this.width = project.width;
+        this.height = project.height;
       }
 
       ready() {
         super.ready();
-        this.renderProjectImage();
+        this.renderProjectTile();
       }
 
-      renderProjectImage() {
+      renderProjectTile() {
         if (+document.documentElement.clientWidth >= 1024) {
           this.style.width = this.width;
         }
         this.style.height = this.height;
-        this.$.container.style.backgroundImage = 'url(' + this.image + ')';
+        this.$.container.style.backgroundImage = 'url(' + this.showcaseImage + ')';
       }
 
       getDownloadURL(project_path, image) {
@@ -89,15 +97,12 @@
         this.$.container.elevation = 0;
       }
 
-      openImage() {
-        this.dispatchEvent(new CustomEvent('open-large-image', {
-          bubbles: true,
-          composed: true,
-          detail: { image: this.image }
-        }));
+      openProject() {
+        window.history.pushState({}, null, '/projects/view/' + this.projectId);
+        window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }
 
-    window.customElements.define(ProjectImage.is, ProjectImage);
+    window.customElements.define(ProjectTile.is, ProjectTile);
   </script>
 </dom-module>

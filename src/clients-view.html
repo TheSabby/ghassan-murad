@@ -1,57 +1,60 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="clients-view">
   <template>
     <style include="iron-flex iron-flex-alignment">
-      :host {
+       :host {
         display: block;
       }
 
       .container {
-        height: calc(100vh - 69px);
+        background-color: #fff;
+        max-width: 1024px;
+        margin: 20px auto;
+        padding: 20px;
       }
 
-      .client-image {
-        width: 180px;
-        height: 180px;
-        background-size: contain;
+      .client {
+        width: 23%;
+        height: 250px;
         background-position: center;
+        background-size: contain;
         background-repeat: no-repeat;
-        margin: 20px;
+      }
+
+      @media only screen and (max-width: 1024px) {
+        .client {
+          width: 80%;
+          height: 250px;
+          margin: 15px auto;
+        }
       }
     </style>
 
-    <div class="container vertical layout center-center">
-      <div class="images horizontal layout center-center">
-        <div class="client-image" style="background-image: url(/images/clients/Barista.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/CMJ.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/Codeadore.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/Jadal.png)"></div>
-      </div>
-      <div class="images horizontal layout center-center">
-        <div class="client-image" style="background-image: url(/images/clients/MB.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/Onglobe.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/Triangle.png)"></div>
-        <div class="client-image" style="background-image: url(/images/clients/Yazan.png)"></div>
-      </div>
+    <div class="container horizontal layout wrap center justified">
+      <div class="client" style="background-image: url({{getDownloadURL('Barista.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('CMJ.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('Codeadore.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('Jadal.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('MB.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('Onglobe.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('Triangle.png')}})"></div>
+      <div class="client" style="background-image: url({{getDownloadURL('Yazan.png')}})"></div>
     </div>
-
   </template>
 
   <script>
-    Polymer({
-      is: 'clients-view',
-    });
+    class ClientsView extends Polymer.Element {
+      static get is() { return 'clients-view'; }
+
+      getDownloadURL(image) {
+        return 'https://firebasestorage.googleapis.com/v0/b/ghassan-murad.appspot.com/o/clients%2F' +
+          image +
+          '?alt=media';
+      }
+    }
+
+    window.customElements.define(ClientsView.is, ClientsView);
   </script>
 </dom-module>

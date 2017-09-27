@@ -1,88 +1,189 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
 
 <link rel="import" href="project-image.html">
 
 <dom-module id="project-view">
   <template>
-    <style include="iron-flex iron-flex-alignment iron-flex-factors">
-      :host {
+    <style include="iron-flex iron-flex-alignment">
+       :host {
         display: block;
-        box-sizing: border-box;
       }
 
       .container {
-        margin-top: 30px;
+        max-width: 1024px;
+        margin: auto;
       }
 
-      .description-area {
-        padding: 20px;
+      .project-info {
+        padding: 25px 16px;
+        text-align: center;
+        min-height: 100px;
+        margin-top: 20px;
+        background-color: #fff;
+        box-sizing: border-box;
       }
 
-      .title {
+      .project-title {
         font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: bolder;
-        line-height: 5rem;
-        font-size: 5rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 2.1rem;
       }
 
-      .description {
-        margin-top: 25px;
+      .project-desc {
         font-family: 'Roboto', 'Noto', sans-serif;
-        font-weight: 400;
         font-size: 1rem;
       }
 
-      .images {
-        padding: 20px;
+      .media {
+        width: 100vw;
+        max-width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #fff;
+        display: block;
+        z-index: 15;
       }
     </style>
 
-    <div class="container horizontal layout start">
-      <div class="description-area vertical layout flex">
-        <div class="title">{{projectTitle}}</div>
-        <div class="description">{{projectDescription}}</div>
-      </div>
-      <div id="images" class="images horizontal layout wrap justified flex-2"></div>
+    <app-route route="{{route}}" pattern="/:id" data="{{routeData}}"></app-route>
+
+    <div class="container vertical layout">
+      <paper-material class="project-info vertical layout" elevation="3">
+        <div class="project-title">{{title}}</div>
+        <div class="project-desc">{{desc}}</div>
+      </paper-material>
+      <div id="media" class="media horizontal layout wrap flex-start"></div>
+      <google-youtube id="youtube" video-id="[[videoId]]" rel="0" width="[[youtubeWidthText]]" height="[[youtubeHeightText]]" autoplay="0"></google-youtube>
     </div>
   </template>
 
   <script>
-    Polymer({
-      is: 'project-view',
+    class ProjectView extends Polymer.Element {
+      static get is() { return 'project-view'; }
 
-      properties: {
-        project: Object,
-        projectTitle: String,
-        projectDescription: String,
-        projectImage: String,
-        projectImages: Array
-      },
-
-      reloadProject: function() {
-        var project = this;
-        project.projectTitle = project.project.projectTitle;
-        project.projectDescription = project.project.description;
-        project.projectImage = project.project.showcaseImage;
-        project.projectImages = project.project.projectImages;
-
-        Polymer.dom(project.$.images).innerHTML = '';
-        project.projectImages.forEach(function(image) {
-          image = new ProjectImage(image.image, image.size);
-          Polymer.dom(project.$.images).appendChild(image);
-        });
+      static get properties() {
+        return {
+          inView: {
+            type: Boolean,
+            observer: 'projectChanged'
+          },
+          route: Object,
+          routeData: Object,
+          id: {
+            type: String,
+            value: '0',
+            observer: 'projectChanged'
+          },
+          firebase: Object,
+          project: {
+            type: Object,
+            observer: 'renderProject'
+          },
+          type: String,
+          title: String,
+          desc: String,
+          storagePath: String,
+          videoId: String,
+          youtubeWidth: {
+            type: String,
+            value: () => {
+              if (+document.documentElement.clientWidth >= 1024) {
+                return 1024;
+              } else {
+                var width = +document.documentElement.clientWidth;
+                var height = Math.ceil((width / 16) * 9);
+                if (height > document.documentElement.clientHeight) {
+                  height = +document.documentElement.clientHeight;
+                  width = Math.ceil((height / 9) * 16);
+                }
+                return width;
+              }
+            },
+            observer: 'youtubeWidthSet'
+          },
+          youtubeHeight: {
+            type: Number,
+            value: 576
+          },
+          youtubeWidthText: String,
+          youtubeHeightText: String
+        };
       }
-    });
+
+      static get observers() {
+        return [
+          '_routeProjectChanged(routeData.id)',
+        ];
+      }
+
+      _routeProjectChanged(id) {
+        this.id = id || '0';
+      }
+
+      projectChanged() {
+        if (this.inView) {
+          this.getProject();
+        }
+      }
+
+      getProject() {
+        var version = localStorage.getItem('version');
+        var projects = localStorage.getItem('projects');
+        if (!version) {
+          this.firebase.database().ref('/version').once('value').then(snapshot => {
+            localStorage.setItem('version', snapshot.val());
+          });
+          this.firebase.database().ref('/projects').once('value').then(snapshot => {
+            var projects = snapshot.val();
+            localStorage.setItem('projects', JSON.stringify(projects));
+            this.project = projects[this.id];
+          });
+        } else {
+          var projects = JSON.parse(projects);
+          this.project = projects[this.id];
+          this.firebase.database().ref('/version').once('value').then(snapshot => {
+            if (snapshot.val() != version) {
+              localStorage.setItem('version', snapshot.val());
+              this.firebase.database().ref('/projects').once('value')
+                .then(snapshot => localStorage.setItem('projects', JSON.stringify(snapshot.val())));
+            }
+          });
+        }
+      }
+
+      renderProject() {
+        this.$.media.innerHTML = '';
+        this.type = this.project.type;
+        this.title = this.project.title;
+        this.desc = this.project.description;
+        this.storagePath = this.project.storage_path;
+
+        if (this.type == 'video') {
+          this.$.youtube.style.display = 'block';
+          this.$.media.style.display = 'none';
+          this.videoId = this.project.video_url;
+        } else {
+          this.$.youtube.style.display = 'none';
+          this.$.media.style.display = 'flex';
+          this.project.images.forEach(image => {
+            var project_image = new ProjectImage(this.storagePath, image);
+            this.$.media.appendChild(project_image);
+          });
+        }
+      }
+
+      youtubeWidthSet() {
+        this.youtubeWidthText = this.youtubeWidth + 'px';
+        this.youtubeHeight = Math.ceil((this.youtubeWidth / 16) * 9);
+        this.youtubeHeightText = this.youtubeHeight + 'px';
+        this.$.youtube.style.margin = 0;
+        this.$.youtube.style.padding = 0;
+      }
+    }
+
+    window.customElements.define(ProjectView.is, ProjectView);
   </script>
 </dom-module>

@@ -1,113 +1,89 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
 
 <dom-module id="offers-view">
   <template>
-    <style include="iron-flex iron-flex-alignment iron-flex-factors">
-      :host {
+    <style include="iron-flex iron-flex-alignment">
+       :host {
         display: block;
       }
 
       .container {
-        height: calc(100vh - 69px);
+        max-width: 1024px;
+        margin: 20px auto;
+        padding: 20px;
       }
 
       .offer {
-        width: 300px;
-        height: 430px;
-        padding: 20px;
-        margin: 20px;
-        border-radius: 10px;
-        background-color: #000;
-        color: #fff;
+        background-color: #fff;
+        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        text-transform: uppercase;
+        font-weight: bold;
+        width: 318px;
+        padding: 10px 16px;
+        box-sizing: border-box;
+        height: 432px;
       }
 
       .offer-title {
-        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: bolder;
-        font-size: 4rem;
-        line-height: 3.1rem;
-        text-transform: uppercase;
-        text-align: right;
+        font-size: 2.1rem;
       }
 
-      .offer-desc {
-        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        font-weight: bolder;
-        font-size: 1.5rem;
-        line-height: 1.3rem;
-        text-transform: uppercase;
-        margin-top: 30px;
+      .offer-list {
+        margin-top: 15px;
       }
 
-      .smaller {
-        font-size: 0.8rem;
-        line-height: 0.5rem;
+      .offer-list-item {
+        font-size: 1.4rem;
       }
 
-      .price {
-        font-size: 2rem;
-        line-height: 1rem;
-        margin-right: 2px;
-        margin-top: 8px;
+      @media only screen and (max-width: 1024px) {
+        .offer {
+          margin: 20px auto;
+        }
       }
     </style>
 
-    <div class="container horizontal layout center-center">
-      <div class="offer vertical layout">
-        <div class="offer-title">Premium Brand Package</div>
-        <div class="offer-desc">
-          + BRAND IDENTITY<br />
-          + 2 MARKETING CONCEPTS<br />
-          + 3 PROMO ADS<br />
-          + COPYWRITING<br />
-          + INTERIOR DESIGN<br />
-          + PRINT MATERIAL<br />
-          + SOCIAL MEDIA CONTENT<br />
-          + WEB DESIGN<br />
-          + WEB DEVELOPMENT
-        </div>
-        <span class="flex"></span>
-        <!-- <div class="offer-desc smaller">Starting At</div>
-        <div class="offer-desc price"><span class="price">4,000</span><span class="smaller">Jod</span></div> -->
-      </div>
-      <div class="offer vertical layout">
-        <div class="offer-title">Premium Advert Package</div>
-        <div class="offer-desc">
-          + 3 MARKETING CONCEPTS<br />
-          + 2 PROMO ADS<br />
-          + COPYWRITING<br />
-          + SOCIAL MEDIA CONTENT
-        </div>
-        <span class="flex"></span>
-        <!-- <div class="offer-desc smaller">Starting At</div>
-        <div class="offer-desc price"><span class="price">1,200</span><span class="smaller">Jod</span></div> -->
-      </div>
-      <div class="offer vertical layout">
+    <div class="container horizontal wrap layout justified">
+      <paper-material class="offer" elevation="3">
         <div class="offer-title">Tailored Design Package</div>
-        <div class="offer-desc">
-          + CUSTOM TO NEEDS<br />
-          + CONSULTAION
+        <div class="offer-list">
+          <div class="offer-list-item">+ Custom to needs</div>
+          <div class="offer-list-item">+ Consultation</div>
         </div>
-        <span class="flex"></span>
-      </div>
+      </paper-material>
+      <paper-material class="offer" elevation="3">
+        <div class="offer-title">Premium Advert Package</div>
+        <div class="offer-list">
+          <div class="offer-list-item">+ 3 Marketing concepts</div>
+          <div class="offer-list-item">+ 2 Promo Ads</div>
+          <div class="offer-list-item">+ Copywriting</div>
+          <div class="offer-list-item">+ Social media writing</div>
+        </div>
+      </paper-material>
+      <paper-material class="offer" elevation="3">
+        <div class="offer-title">Premium Brand Package</div>
+        <div class="offer-list">
+          <div class="offer-list-item">+ Brand Identity</div>
+          <div class="offer-list-item">+ 2 Marketing concepts</div>
+          <div class="offer-list-item">+ 3 Promo ads</div>
+          <div class="offer-list-item">+ Copywriting</div>
+          <div class="offer-list-item">+ Interior design</div>
+          <div class="offer-list-item">+ Print material</div>
+          <div class="offer-list-item">+ Social media content</div>
+          <div class="offer-list-item">+ Web design</div>
+          <div class="offer-list-item">+ Web development</div>
+        </div>
+      </paper-material>
     </div>
-
   </template>
 
   <script>
-    Polymer({
-      is: 'offers-view',
-    });
+    class OffersView extends Polymer.Element {
+      static get is() { return 'offers-view'; }
+    }
+
+    window.customElements.define(OffersView.is, OffersView);
   </script>
 </dom-module>

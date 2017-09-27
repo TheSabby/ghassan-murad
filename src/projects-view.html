@@ -1,351 +1,58 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
-<link rel="import" href="project-item.html">
-<link rel="import" href="project-video.html">
+<link rel="import" href="projects-list.html">
 <link rel="import" href="project-view.html">
 
 <dom-module id="projects-view">
   <template>
     <style include="iron-flex iron-flex-alignment">
-      :host {
+       :host {
         display: block;
-      }
-
-      .typed-area {
-        position: absolute;
-        display: block;
-        width: 100vw;
-        height: calc(100vh - 69px);
-        text-align: center;
-        z-index: 100;
-        background-color: var(--app-secondary-color);
-      }
-
-      .typed {
-        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
-        text-transform: uppercase;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 6rem;
-        color: var(--app-primary-color);
-      }
-
-      .typed-cursor{
-      	opacity: 1;
-      	-webkit-animation: blink 0.7s infinite;
-      	-moz-animation: blink 0.7s infinite;
-      	animation: blink 0.7s infinite;
-        font-size: 5rem;
-        position: relative;
-        top: -7px;
-      }
-
-      @keyframes blink{
-        0% { opacity:1; }
-      	49% { opacity:1; }
-      	50% { opacity:0; }
-      	99% { opacity:0; }
-        100% { opacity:1; }
-      }
-
-      @-webkit-keyframes blink{
-      	0% { opacity:1; }
-      	49% { opacity:1; }
-      	50% { opacity:0; }
-      	99% { opacity:0; }
-        100% { opacity:1; }
-      }
-
-      @-moz-keyframes blink{
-        0% { opacity:1; }
-      	49% { opacity:1; }
-      	50% { opacity:0; }
-      	99% { opacity:0; }
-        100% { opacity:1; }
-      }
-
-      .projects {
-        padding: 35px 24px;
       }
     </style>
 
-    <app-route
-        route="{{route}}"
-        pattern="/:view"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
-    <div id="typed_area" class="typed-area horizontal layout center-center">
-      <div id="typed" class="typed"></div>
-    </div>
+    <firebase-app app="{{firebase}}" auth-domain="ghassan-murad.firebaseapp.com" database-url="https://ghassan-murad.firebaseio.com"
+      api-key="AIzaSyChiQSd138Gup2wxXAzLw5KfuW97BDGvjg" storage-bucket="ghassan-murad.appspot.com" messaging-sender-id="121873744054">
+    </firebase-app>
 
-    <iron-pages
-      selected="{{routeData.view}}"
-      attr-for-selected="name"
-      fallback-selection="list"
-      role="main">
-      <div id="projects" name="list" class="projects horizontal layout justified wrap"></div>
-      <project-view id="project" name="project" project="{{selectedProject}}"></project-view>
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="list" selected-attribute="in-view" role="main">
+      <projects-list name="list" firebase="{{firebase}}"></projects-list>
+      <project-view name="view" route="{{subroute}}" firebase="{{firebase}}"></project-view>
     </iron-pages>
   </template>
 
   <script>
-    Polymer({
-      is: 'projects-view',
+    class ProjectsView extends Polymer.Element {
+      static get is() { return 'projects-view'; }
 
-      properties: {
-        selectedProject: {
-          type: Object,
-          value: null
-        },
-        selectedProject: Object,
-        projects: {
-          type: Array,
-          value: [
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Baghdad_Olympics/01.jpg',
-              images: [
-                { image: '/images/projects/Baghdad_Olympics/01.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/02.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/03.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/04.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/05.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/06.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/07.jpg', size: '24%' },
-                { image: '/images/projects/Baghdad_Olympics/08.jpg', size: '24%' }
-              ],
-              width: '100%',
-              layout: 'horizontal',
-              title: 'Baghdad Olympics',
-              description: "Baghdad 2040 Olympics is a virtual project dipicting the brand and visual identity of the olympic games if they were to be hosted in Baghdad in 2040, including concepts and pictograms along with several unconventional advertisement posters.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-video',
-              video_url: 'VMyqus2UnxM',
-              showcase_image: '/images/projects/V_Aman_Aman/Aman.png',
-              width: '32%',
-              title: 'Yazan Haifawy - Aman Aman'
-            },
-            {
-              type: 'project-video',
-              video_url: 'pexn6Q1yjYU',
-              showcase_image: '/images/projects/V_Barista_Nitro_Cold_Brew/Barista.png',
-              width: '32%',
-              title: 'Barista Nitro Cold Brew Coffee'
-            },
-            {
-              type: 'project-video',
-              video_url: '8_PlIBfPF_Y',
-              showcase_image: '/images/projects/V_Confused_App/Confused.png',
-              width: '32%',
-              title: 'Confused App Promo'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Lego_SpraynPlay/00.JPG',
-              images: [
-                { image: '/images/projects/Lego_SpraynPlay/00.JPG', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/01.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/02.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/03.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/04.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/05.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/06.jpg', size: '24%' },
-                { image: '/images/projects/Lego_SpraynPlay/07.jpg', size: '24%' }
-              ],
-              width: '32%',
-              layout: 'vertical',
-              title: 'Spray n\' Play',
-              description: "The concept behind this advertising/marketing campaign does not only promote LEGOs mission statement, ìInspire and develop the builders of tomorrow but also provokes consumers to initiate a referral network marketing campaign. The main idea was to ignite a promotional event that is of such simplicity to impact consumers themselves to spread exposure. The subjects are to get a construction block, doesn’t matter the size. However, the bigger the better. With the use of spray paint (or any other form of paint) the subjects are to paint the construction block then get a free LEGO Spray n’ Play sticker from the nearest Lego distributer, stick it on the block, take photos of the painted block with the sticker in an interesting spot, post the photo on facebook with the hashtag #spraynplay and the subject with an interesting photo would be contacted to receive a gift from LEGO.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Man_vs_Nature_Narration/0.jpg',
-              images: [
-                { image: '/images/projects/Man_vs_Nature_Narration/0.jpg', size: '100%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/1.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/2.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/3.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/4.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/5.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/6.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/7.jpg', size: '24%' },
-                { image: '/images/projects/Man_vs_Nature_Narration/8.jpg', size: '24%' }
-              ],
-              width: '32%',
-              layout: 'vertical',
-              title: 'Man vs Nature Narration',
-              description: "",
-              description_size: '4%'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Youth_Knowledge_Forum/1.jpg',
-              images: [
-                { image: '/images/projects/Youth_Knowledge_Forum/1.jpg', size: '24%' },
-                { image: '/images/projects/Youth_Knowledge_Forum/2.jpg', size: '24%' },
-                { image: '/images/projects/Youth_Knowledge_Forum/3.jpg', size: '24%' },
-                { image: '/images/projects/Youth_Knowledge_Forum/4.jpg', size: '24%' },
-                { image: '/images/projects/Youth_Knowledge_Forum/5.jpg', size: '49%' },
-                { image: '/images/projects/Youth_Knowledge_Forum/6.jpg', size: '49%' }
-              ],
-              width: '32%',
-              layout: 'vertical',
-              title: 'Youth Knowledge Forum',
-              description: "Youth Knowledge Forum is an annual activity presented by Majdi Bukhari International that takes place in Al-Madinah in Saudi Arabia. The forum promotes several subjects to the youth in different fields, including Mobile Applications, Cloud Computing, Virtual Reality and 3D printing. It also focuses on the evolving the Information Technology sector in Al-Madinah in regard to shifting the IT community and covers the most modern practices in the field. The work involved the creation of the event brand, advertising concepts and posters, in addition to the design elements inside the forum.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-video',
-              video_url: '_b6TcXfLKlc',
-              showcase_image: '/images/projects/V_Jadal_Kanz/Kanz.png',
-              width: '49%',
-              title: 'Jadal Kanz'
-            },
-            {
-              type: 'project-video',
-              video_url: 'LIWMTrInE0Y',
-              showcase_image: '/images/projects/V_Jadal_Mish_Hadol_Nasak/Msh_Hadol_Nasak.png',
-              width: '49%',
-              title: 'Jadal - Mish Hadol Nasak'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/G12_Line/01.jpg',
-              images: [
-                { image: '/images/projects/G12_Line/01.jpg', size: '100%' },
-                { image: '/images/projects/G12_Line/02.jpg', size: '24%' },
-                { image: '/images/projects/G12_Line/03.jpg', size: '24%' },
-                { image: '/images/projects/G12_Line/04.jpg', size: '24%' },
-                { image: '/images/projects/G12_Line/05.jpg', size: '24%' }
-              ],
-              width: '49%',
-              layout: 'horizontal',
-              title: 'G12 Line',
-              description: "G12 T-Shirt Line is a virtual clothing line brand, designing funky high quality T-Shirts, The brand identity focuses on being up-to-date with the youth scene trends. G12 also provides the service of printing custom designs on T-Shirts.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Wahj_Mall/01.jpg',
-              images: [
-                { image: '/images/projects/Wahj_Mall/01.jpg', size: '49%' },
-                { image: '/images/projects/Wahj_Mall/02.jpg', size: '49%' },
-                { image: '/images/projects/Wahj_Mall/03.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/04.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/05.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/06.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/07.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/08.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/09.jpg', size: '24%' },
-                { image: '/images/projects/Wahj_Mall/10.jpg', size: '24%' }
-              ],
-              width: '49%',
-              layout: 'horizontal',
-              title: 'Wahj Mall',
-              description: "As Ludwig Mies van der Rohe has stated ‘Less is more’. The Seagram Building located in Park Avenue is a reflection of simplicity and integrity in form and structure. Wahj Mall combines the international style through Mies’ modern stylistic movement and the luxury depicted in the of simplicity of design, for the customers to be in an environment that would amplify the ultimate shopping experience. The virtual work involved the creation of the brand, and the signage inside the building.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-page',
-              showcase_image: '/images/projects/Electronic_Services_Forum/1.jpg',
-              images: [
-                { image: '/images/projects/Electronic_Services_Forum/1.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/2.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/3.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/4.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/5.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/6.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/7.jpg', size: '24%' },
-                { image: '/images/projects/Electronic_Services_Forum/8.jpg', size: '24%' }
-              ],
-              width: '100%',
-              layout: 'horizontal',
-              title: 'Electronic Services Forum',
-              description: "Electronic Services Forum is an annual activity presented by Majdi Bukhari International that takes place in Al-Madinah in Saudi Arabia. The forum discusses E-Commerce and E-Governmental Services for both individuals and businesses. It also focuses on the implementation of a technological and legal infrastructure in order to launch these services. The work involved the creation of the event brand, in addition to the design elements inside the forum.",
-              description_size: '30%'
-            },
-            {
-              type: 'project-video',
-              video_url: '0_btxzHnCUk',
-              showcase_image: '/images/projects/V_Pill_in_Ibiza/Ibiza.png',
-              width: '49%',
-              title: 'Pill In Ibiza'
-            },
-            {
-              type: 'project-video',
-              video_url: 'amprNk-mnvc',
-              showcase_image: '/images/projects/V_Supercharge/Supercharge.png',
-              width: '49%',
-              title: 'Supercharge'
-            }
-          ]
-        }
-      },
-
-      listeners: {
-        'open-project': 'openProject'
-      },
-
-      openProject: function(e) {
-        this.selectedProject = e.detail.project;
-        this.set('route.path', '/project');
-        this.$.project.reloadProject();
-      },
-
-      ready: function() {
-        var view = this;
-
-        view.projects.forEach(function(project) {
-          if(project.type == 'project-video') {
-            project = new ProjectVideo(project);
-          } else {
-            project = new ProjectItem(project);
-          }
-          Polymer.dom(view.$.projects).appendChild(project);
-        });
-
-        if(localStorage.getItem('viewed-intro') == 'true') {
-          $(view.$.typed_area).hide();
-        } else {
-          $(view.$.typed).typed({
-            strings: [
-              "DREAM.",
-              "CONCEPTUALIZE.",
-              "VISUALIZE.",
-              "IMPLEMENT.",
-              "DREAM BIGGER. ^1000GET MADE.",
-            ],
-  			    typeSpeed: 20,
-            backSpeed: 20,
-            startDelay: 500,
-            backDelay: 1000,
-            callback: function() {
-              setTimeout(function() {
-                $(view.$.typed_area).fadeOut();
-              }, 1000);
-              localStorage.setItem('viewed-intro', 'true');
-            }
-          });
+      static get properties() {
+        return {
+          route: Object,
+          page: String,
+          firebase: Object,
+          routeData: Object,
+          subroute: String,
         }
       }
-    });
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      _routePageChanged(page) {
+        this.page = page || 'list';
+      }
+    }
+
+    window.customElements.define(ProjectsView.is, ProjectsView);
   </script>
 </dom-module>

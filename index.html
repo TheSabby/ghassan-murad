@@ -10,147 +10,129 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="Polymer Starter Kit">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
     <title>Ghassan Murad</title>
-    <meta name="description" content="Ghassan Murad description">
+    <meta name="description" content="My App description">
 
-    <link rel="icon" href="/images/favicon.png?v=2">
+    <!--
+      The `<base>` tag below is present to support two advanced deployment options:
+      1) Differential serving. 2) Serving from a non-root path.
+
+      Instead of manually editing the `<base>` tag yourself, you should generally either:
+      a) Add a `basePath` property to the build configuration in your `polymer.json`.
+      b) Use the `--base-path` command-line option for `polymer build`.
+
+      Note: If you intend to serve from a non-root path, see [polymer-root-path] below.
+    -->
+    <base href="/">
+
+    <link rel="icon" href="images/favicon.png">
 
     <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
 
     <!-- See https://goo.gl/qRE0vM -->
     <meta name="theme-color" content="#3f51b5">
 
     <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Ghassan Murad">
+    <meta name="application-name" content="My App">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ghassan Murad">
+    <meta name="apple-mobile-web-app-title" content="My App">
 
     <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="/images/favicon.png?v=2">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicon.png?v=2">
-    <link rel="apple-touch-icon" sizes="96x96" href="/images/favicon.png?v=2">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon.png?v=2">
-    <link rel="apple-touch-icon" sizes="192x192" href="/images/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
 
     <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="/images/favicon.png?v=2">
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
     <meta name="msapplication-TileColor" content="#3f51b5">
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Cairo:300,400,700" rel="stylesheet">
-
-    <!-- Javascript -->
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/typed.js/dist/typed.min.js"></script>
-    <script src="/js/main.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyChiQSd138Gup2wxXAzLw5KfuW97BDGvjg",
-        authDomain: "ghassan-murad.firebaseapp.com",
-        databaseURL: "https://ghassan-murad.firebaseio.com",
-        projectId: "ghassan-murad",
-        storageBucket: "ghassan-murad.appspot.com",
-        messagingSenderId: "121873744054"
-      };
-      firebase.initializeApp(config);
-    </script>
+    <link href="https://fonts.googleapis.com/css?family=Cairo:400,700" rel="stylesheet">
 
     <script>
-      // Setup Polymer options
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true,
-      };
+      /**
+      * [polymer-root-path]
+      *
+      * By default, we set `Polymer.rootPath` to the server root path (`/`).
+      * Leave this line unchanged if you intend to serve your app from the root
+      * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+      *
+      * If you intend to serve your app from a non-root path (e.g., with URLs
+      * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+      * to indicate the path from which you'll be serving, including leading
+      * and trailing slashes (e.g., `/my-app/`).
+      */
+      window.Polymer = { rootPath: '/' };
 
-      // Load webcomponentsjs polyfill if browser does not support native
-      // Web Components
-      (function() {
-        'use strict';
-
-        var onload = function() {
-          // For native Imports, manually fire WebComponentsReady so user code
-          // can use the same code path for native and polyfill'd imports.
-          if (!window.HTMLImports) {
-            document.dispatchEvent(
-              new CustomEvent('WebComponentsReady', {bubbles: true})
-            );
-          }
-        };
-
-        var webComponentsSupported = (
-          'registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')
-        );
-
-        if (!webComponentsSupported) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-          script.onload = onload;
-          document.head.appendChild(script);
-        } else {
-          onload();
-        }
-      })();
-
-      // Load pre-caching Service Worker
+      // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js');
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: Polymer.rootPath,
+          });
         });
       }
     </script>
 
-    <link rel="import" href="/src/ghassan-murad.html">
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="bower_components/typed.js/lib/typed.min.js"></script>
 
-    <style is="custom-style">
+    <!-- Load your application shell -->
+    <link rel="import" href="src/app-shell.html">
+
+    <!-- Add any global styles for body, document, etc. -->
+    <style>
       @font-face {
-        font-family: 'Square';
-        src: url('../fonts/Square.ttf');
+        font-family: square;
+        src: url(fonts/square.ttf);
       }
 
       @font-face {
-        font-family: 'Square Outline';
-        src: url('../fonts/Squareo.ttf');
-      }
-
-      html {
-        --app-primary-color: #000;
-        --app-secondary-color: #fff;
-        --app-background-color: #fff;
-        font-size: 16px;
+        font-family: square-outline;
+        src: url(fonts/squareo.ttf);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        --app-primary-color: #fff;
+        --app-secondary-color: #000;
+        --app-background-color: #000;
+      }
+
       body {
         margin: 0;
-        font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
+        font-family: 'Roboto', 'Noto', sans-serif;
         line-height: 1.5;
         min-height: 100vh;
         background-color: var(--app-background-color);
       }
     </style>
   </head>
+
   <body>
-    <ghassan-murad></ghassan-murad>
+    <app-shell></app-shell>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
     <!-- Built with love using Polymer Starter Kit -->
   </body>
+
 </html>
