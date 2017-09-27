@@ -15,7 +15,9 @@ module.exports = {
     "index.html",
     "manifest.json",
     "images/black-logo.svg",
-    "bower_components/webcomponentsjs/*"
+    "images/ghassan.png",
+    "bower_components/webcomponentsjs/*",
+    "bower_components/typed.js/lib/*"
   ],
   navigateFallback: "index.html"
 };
