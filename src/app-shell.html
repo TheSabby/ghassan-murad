@@ -45,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       app-header {
         font-family: square;
-        color: #000;
+        color: var(--app-secondary-color);
         background-color: var(--app-primary-color);
       }
 
@@ -61,12 +61,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         padding: 0 16px;
         text-decoration: none;
-        color: var(--app-secondary-color);
+        color: var(--app-primary-color);
         line-height: 40px;
       }
 
       .drawer-list a.iron-selected {
-        color: black;
+        color: var(--app-primary-color);
         font-weight: bold;
       }
 
@@ -83,13 +83,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .page-link {
         font-family: 'Cairo', 'Roboto', 'Noto', sans-serif;
         font-size: 1rem;
-        color: #000;
+        color: var(--app-secondary-color);
         text-decoration: none;
         margin: 0 15px;
       }
 
       .page-link:visited {
-        color: #000;
+        color: var(--app-secondary-color);
       }
 
       .large-image {
@@ -126,7 +126,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div hidden$="[[wideLayout]]">
               <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             </div>
-            <img class="logo" src="../images/black-logo.svg" on-click="openProjects" />
+            <img class="logo" src="../images/logo.svg" on-click="openProjects" />
             <div class="title" on-click="openProjects">Ghassan Murad</div>
             <span class="flex"></span>
             <div class="page-links" hidden$="[[!wideLayout]]">

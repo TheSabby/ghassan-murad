@@ -6,39 +6,56 @@
   <template>
     <style include="iron-flex iron-flex-alignment">
        :host {
-        display: inline-block;
         width: 100%;
-        height: 300px;
+        height: 100%;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
       }
 
       .container {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: 2px solid #fff;
-        box-sizing: border-box;
+        width: 75%;
+        height: 75%;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
+        box-sizing: border-box;
         cursor: pointer;
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
       }
 
       .container:hover {
-        transform: scale(1.04) translateY(-4px);
+        transform: scale(1.02) translateY(-2px);
         z-index: 20;
       }
 
-      @media only screen and (max-width: 1024px) {
-         :host {
-          width: 100%;
-          height: 250px;
-        }
+      .title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        color: var(--app-primary-color);
+        background-color: rgba(255, 255, 255, 0.8);
       }
     </style>
 
-    <paper-material id="container" class="container paper-material" elevation="0" on-mouseover="raise" on-mouseout="lower" on-click="openProject"
-      animated></paper-material>
+    <paper-material id="container" class="container paper-material" elevation="1" on-mouseover="raise" on-mouseout="lower" on-click="openProject"
+      animated>
+      <div class="title">{{title}}</div>
+    </paper-material>
   </template>
 
   <script>
@@ -48,24 +65,36 @@
       static get properties() {
         return {
           projectId: Number,
-          type: String,
+          smallLayout: Boolean,
+          type: {
+            type: String,
+            reflectToAttribute: true,
+            notify: true
+          },
           showcaseImage: String,
           title: String,
           layout: String,
-          width: String,
-          height: String
+          rows: Number,
+          cols: Number,
+          year: {
+            type: Number,
+            reflectToAttribute: true,
+            notify: true
+          }
         };
       }
 
-      constructor(id, project) {
+      constructor(id, small, project) {
         super();
         this.projectId = id;
+        this.smallLayout = small;
         this.type = project.type;
         this.title = project.title;
         this.showcaseImage = this.getDownloadURL(project.storage_path, project.showcase_image);
         this.layout = project.layout;
-        this.width = project.width;
-        this.height = project.height;
+        this.rows = project.tile_size.rows;
+        this.cols = project.tile_size.cols;
+        this.year = project.year;
       }
 
       ready() {
@@ -73,11 +102,14 @@
         this.renderProjectTile();
       }
 
+      getTileSize(sizing_unit) {
+        if (this.smallLayout) { return '75%'; }
+        return sizing_unit > 1 ? 'calc(75% + ' + ((sizing_unit - 1) * 6.175) + 'vw)' : '75%';
+      }
+
       renderProjectTile() {
-        if (+document.documentElement.clientWidth >= 1024) {
-          this.style.width = this.width;
-        }
-        this.style.height = this.height;
+        this.$.container.style.width = this.getTileSize(this.cols);
+        this.$.container.style.height = this.getTileSize(this.rows);
         this.$.container.style.backgroundImage = 'url(' + this.showcaseImage + ')';
       }
 
@@ -90,11 +122,11 @@
       }
 
       raise() {
-        this.$.container.elevation = 5;
+        this.$.container.elevation = 2;
       }
 
       lower() {
-        this.$.container.elevation = 0;
+        this.$.container.elevation = 1;
       }
 
       openProject() {
