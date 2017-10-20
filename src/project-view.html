@@ -1,29 +1,37 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
+<link rel="import"
+      href="../bower_components/polymer/polymer-element.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="../bower_components/app-route/app-route.html">
+<link rel="import"
+      href="../bower_components/google-youtube/google-youtube.html">
 
-<link rel="import" href="project-image.html">
+<link rel="import"
+      href="project-image.html">
+
+<script src="../projects/projects.js"></script>
 
 <dom-module id="project-view">
   <template>
     <style include="iron-flex iron-flex-alignment">
-       :host {
+      :host {
         display: block;
+        background-color: #000;
       }
 
       .container {
-        max-width: 1024px;
         margin: auto;
+        min-height: calc(100vh - 64px);
+        position: relative;
       }
 
       .project-info {
         padding: 25px 16px;
         text-align: center;
         min-height: 100px;
-        margin-top: 20px;
-        background-color: #fff;
-        border: 4px solid #000;
+        background-color: #000;
+        color: #fff;
         box-sizing: border-box;
       }
 
@@ -39,25 +47,48 @@
         font-size: 1rem;
       }
 
+      .youtube {
+        margin: auto;
+      }
+
       .media {
-        width: 100vw;
-        max-width: 100%;
-        box-sizing: border-box;
-        border: 2px solid #000;
-        display: block;
-        z-index: 15;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: #000;
+        border: solid 5px #000;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        .media {
+          position: relative;
+          display: grid;
+          grid-gap: 5px;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
       }
     </style>
 
-    <app-route route="{{route}}" pattern="/:id" data="{{routeData}}"></app-route>
+    <app-route route="{{route}}"
+               pattern="/:projectId"
+               data="{{routeData}}"></app-route>
 
     <div class="container vertical layout">
-      <paper-material class="project-info vertical layout" elevation="3">
+      <div class="project-info vertical layout">
         <div class="project-title">{{title}}</div>
         <div class="project-desc">{{desc}}</div>
-      </paper-material>
-      <div id="media" class="media horizontal layout wrap flex-start"></div>
-      <google-youtube id="youtube" video-id="[[videoId]]" rel="0" width="[[youtubeWidthText]]" height="[[youtubeHeightText]]" autoplay="0"></google-youtube>
+      </div>
+      <div id="media"
+           class="media"></div>
+      <div class="horizontal layout center-center">
+        <google-youtube id="youtube"
+                        class="youtube"
+                        video-id="[[videoId]]"
+                        rel="0"
+                        width="[[youtubeWidthText]]"
+                        height="[[youtubeHeightText]]"
+                        autoplay="0"></google-youtube>
+      </div>
     </div>
   </template>
 
@@ -73,16 +104,12 @@
           },
           route: Object,
           routeData: Object,
-          id: {
+          projectId: {
             type: String,
             value: '0',
             observer: 'projectChanged'
           },
-          firebase: Object,
-          project: {
-            type: Object,
-            observer: 'renderProject'
-          },
+          project: Object,
           type: String,
           title: String,
           desc: String,
@@ -116,46 +143,22 @@
 
       static get observers() {
         return [
-          '_routeProjectChanged(routeData.id)',
+          '_routeProjectChanged(routeData.projectId)',
         ];
       }
 
-      _routeProjectChanged(id) {
-        this.id = id || '0';
+      _routeProjectChanged(projectId) {
+        this.projectId = projectId || '0';
       }
 
       projectChanged() {
         if (this.inView) {
-          this.getProject();
-        }
-      }
-
-      getProject() {
-        var version = localStorage.getItem('version');
-        var projects = localStorage.getItem('projects');
-        if (!version) {
-          this.firebase.database().ref('/version').once('value').then(snapshot => {
-            localStorage.setItem('version', snapshot.val());
-          });
-          this.firebase.database().ref('/projects').once('value').then(snapshot => {
-            var projects = snapshot.val();
-            localStorage.setItem('projects', JSON.stringify(projects));
-            this.project = projects[this.id];
-          });
-        } else {
-          var projects = JSON.parse(projects);
-          this.project = projects[this.id];
-          this.firebase.database().ref('/version').once('value').then(snapshot => {
-            if (snapshot.val() != version) {
-              localStorage.setItem('version', snapshot.val());
-              this.firebase.database().ref('/projects').once('value')
-                .then(snapshot => localStorage.setItem('projects', JSON.stringify(snapshot.val())));
-            }
-          });
+          this.renderProject();
         }
       }
 
       renderProject() {
+        this.project = projects.find(project => project.id == this.projectId);
         this.$.media.innerHTML = '';
         this.type = this.project.type;
         this.title = this.project.title;
@@ -168,7 +171,6 @@
           this.videoId = this.project.video_url;
         } else {
           this.$.youtube.style.display = 'none';
-          this.$.media.style.display = 'flex';
           this.project.images.forEach(image => {
             var project_image = new ProjectImage(this.storagePath, image);
             this.$.media.appendChild(project_image);

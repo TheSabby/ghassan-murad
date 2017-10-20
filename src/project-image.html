@@ -1,44 +1,68 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import"
+      href="../bower_components/polymer/polymer-element.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="project-image">
   <template>
     <style include="iron-flex iron-flex-alignment">
-       :host {
-        display: inline-block;
-        width: 100%;
-        height: 300px;
-      }
-
       .container {
-        display: block;
         width: 100%;
         height: 100%;
-        border: 2px solid #000;
-        box-sizing: border-box;
+        min-height: 250px;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
+        box-sizing: border-box;
         cursor: pointer;
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        border-bottom: 5px solid #000;
       }
 
-      .container:hover {
-        transform: scale(1.04) translateY(-4px);
-        z-index: 20;
+      .title {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.2rem;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.7);
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
       }
 
-      @media only screen and (max-width: 1024px) {
-         :host {
-          width: 100%;
-          height: 250px;
+      @media only screen and (min-width: 1024px) {
+        :host {
+          grid-column: 1/1;
+          grid-row: 1/1;
+          margin: 0;
+        }
+
+        .container {
+          border: 0;
+        }
+
+        .title {
+          height: 0;
+          min-height: 0;
+          transition: min-height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .container:hover>.title {
+          min-height: 30%;
         }
       }
     </style>
 
-    <paper-material id="container" class="container paper-material" elevation="0" on-mouseover="raise" on-mouseout="lower" on-click="openImage"
-      animated></paper-material>
+    <div id="container"
+         class="container horizontal layout center-center"
+         on-click="openImage">
+      <div class="title vertical layout layout center-center"></div>
+    </div>
   </template>
 
   <script>
@@ -47,17 +71,19 @@
 
       static get properties() {
         return {
+          imageId: Number,
+          storage_path: String,
           image: String,
-          width: String,
-          height: String
+          tile: Object
         };
       }
 
       constructor(storage_path, project_image) {
         super();
+        this.imageId = project_image.id;
+        this.storage_path = storage_path;
         this.image = this.getDownloadURL(storage_path, project_image.image);
-        this.width = project_image.width;
-        this.height = project_image.height;
+        this.tile = project_image.tile;
       }
 
       ready() {
@@ -66,10 +92,8 @@
       }
 
       renderProjectImage() {
-        if (+document.documentElement.clientWidth >= 1024) {
-          this.style.width = this.width;
-        }
-        this.style.height = this.height;
+        this.style.gridRow = this.tile.large.rows;
+        this.style.gridColumn = this.tile.large.cols;
         this.$.container.style.backgroundImage = 'url(' + this.image + ')';
       }
 
@@ -79,14 +103,6 @@
           '%2F' +
           image +
           '_thumb.png?alt=media';
-      }
-
-      raise() {
-        this.$.container.elevation = 5;
-      }
-
-      lower() {
-        this.$.container.elevation = 0;
       }
 
       openImage() {

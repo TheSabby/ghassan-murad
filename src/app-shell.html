@@ -8,34 +8,56 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import"
+      href="../bower_components/polymer/polymer-element.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import"
+      href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import"
+      href="../bower_components/app-route/app-location.html">
+<link rel="import"
+      href="../bower_components/app-route/app-route.html">
+<link rel="import"
+      href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import"
+      href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import"
+      href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import"
+      href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"
+      href="../bower_components/paper-dialog/paper-dialog.html">
 
-<link rel="lazy-import" href="projects-view.html">
-<link rel="lazy-import" href="clients-view.html">
-<link rel="lazy-import" href="offers-view.html">
-<link rel="lazy-import" href="careers-view.html">
-<link rel="lazy-import" href="contact-view.html">
-<link rel="lazy-import" href="not-found-view.html">
+<link rel="lazy-import"
+      href="projects-view.html">
+<link rel="lazy-import"
+      href="clients-view.html">
+<link rel="lazy-import"
+      href="offers-view.html">
+<link rel="lazy-import"
+      href="careers-view.html">
+<link rel="lazy-import"
+      href="contact-view.html">
+<link rel="lazy-import"
+      href="not-found-view.html">
 
 <dom-module id="app-shell">
   <template>
     <style include="iron-flex">
-       :host {
+      :host {
         display: block;
       }
 
@@ -102,45 +124,78 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
-    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-location route="{{route}}"
+                  url-space-regex="^[[rootPath]]"></app-location>
+    <app-route route="{{route}}"
+               pattern="[[rootPath]]:page"
+               data="{{routeData}}"
+               tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed narrow="{{narrow}}" force-narrow>
+    <app-drawer-layout fullbleed
+                       narrow="{{narrow}}"
+                       force-narrow>
       <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">
+      <app-drawer id="drawer"
+                  slot="drawer"
+                  swipe-open="[[!wideLayout]]">
         <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="projects" href="[[rootPath]]projects">Projects</a>
-          <a name="clients" href="[[rootPath]]clients">Clients</a>
-          <a name="offers" href="[[rootPath]]offers">Offers</a>
-          <a name="careers" href="[[rootPath]]careers">Careers</a>
-          <a name="contact" href="[[rootPath]]contact">Contact</a>
+        <iron-selector selected="[[page]]"
+                       attr-for-selected="name"
+                       class="drawer-list"
+                       role="navigation">
+          <a name="projects"
+             href="[[rootPath]]projects">Projects</a>
+          <a name="clients"
+             href="[[rootPath]]clients">Clients</a>
+          <a name="offers"
+             href="[[rootPath]]offers">Offers</a>
+          <a name="careers"
+             href="[[rootPath]]careers">Careers</a>
+          <a name="contact"
+             href="[[rootPath]]contact">Contact</a>
         </iron-selector>
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout id="headerLayout" has-scrolling-region>
+      <app-header-layout id="headerLayout"
+                         has-scrolling-region>
 
-        <app-header slot="header" reveals effects="waterfall">
+        <app-header slot="header"
+                    reveals
+                    effects="waterfall">
           <app-toolbar>
             <div hidden$="[[wideLayout]]">
-              <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              <paper-icon-button icon="menu"
+                                 drawer-toggle></paper-icon-button>
             </div>
-            <img class="logo" src="../images/logo.svg" on-click="openProjects" />
-            <div class="title" on-click="openProjects">Ghassan Murad</div>
+            <img class="logo"
+                 src="../images/logo.svg"
+                 on-click="openProjects" />
+            <div class="title"
+                 on-click="openProjects">Ghassan Murad</div>
             <span class="flex"></span>
-            <div class="page-links" hidden$="[[!wideLayout]]">
-              <a class="page-link" href="[[rootPath]]projects">Projects</a>
-              <a class="page-link" href="[[rootPath]]clients">Clients</a>
-              <a class="page-link" href="[[rootPath]]offers">Offers</a>
-              <a class="page-link" href="[[rootPath]]careers">Careers</a>
-              <a class="page-link" href="[[rootPath]]contact">Contact</a>
+            <div class="page-links"
+                 hidden$="[[!wideLayout]]">
+              <a class="page-link"
+                 href="[[rootPath]]projects/list">Projects</a>
+              <a class="page-link"
+                 href="[[rootPath]]clients">Clients</a>
+              <a class="page-link"
+                 href="[[rootPath]]offers">Offers</a>
+              <a class="page-link"
+                 href="[[rootPath]]careers">Careers</a>
+              <a class="page-link"
+                 href="[[rootPath]]contact">Contact</a>
             </div>
           </app-toolbar>
         </app-header>
 
-        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="not-found" role="main">
-          <projects-view route="{{subroute}}" name="projects"></projects-view>
+        <iron-pages selected="[[page]]"
+                    attr-for-selected="name"
+                    fallback-selection="not-found"
+                    role="main">
+          <projects-view route="{{subroute}}"
+                         name="projects"></projects-view>
           <clients-view name="clients"></clients-view>
           <offers-view name="offers"></offers-view>
           <careers-view name="careers"></careers-view>
@@ -149,10 +204,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
 
-      <paper-dialog id="largeImage" class="large-image" fit></paper-dialog>
+      <paper-dialog id="largeImage"
+                    class="large-image"
+                    fit></paper-dialog>
     </app-drawer-layout>
 
-    <iron-media-query query="min-width: 1024px" query-matches="{{wideLayout}}"></iron-media-query>
+    <iron-media-query query="min-width: 1024px"
+                      query-matches="{{wideLayout}}"></iron-media-query>
   </template>
 
   <script>

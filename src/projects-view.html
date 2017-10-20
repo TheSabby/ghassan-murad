@@ -1,30 +1,40 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import"
+      href="../bower_components/polymer/polymer-element.html">
+<link rel="import"
+      href="../bower_components/app-route/app-location.html">
+<link rel="import"
+      href="../bower_components/app-route/app-route.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="../bower_components/iron-pages/iron-pages.html">
 
-<link rel="import" href="projects-list.html">
-<link rel="import" href="project-view.html">
+<link rel="import"
+      href="projects-list.html">
+<link rel="import"
+      href="project-view.html">
 
 <dom-module id="projects-view">
   <template>
     <style include="iron-flex iron-flex-alignment">
-       :host {
+      :host {
         display: block;
       }
     </style>
 
-    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}"
+               pattern="/:page"
+               data="{{routeData}}"
+               tail="{{subroute}}"></app-route>
 
-    <firebase-app app="{{firebase}}" auth-domain="ghassan-murad.firebaseapp.com" database-url="https://ghassan-murad.firebaseio.com"
-      api-key="AIzaSyChiQSd138Gup2wxXAzLw5KfuW97BDGvjg" storage-bucket="ghassan-murad.appspot.com" messaging-sender-id="121873744054">
-    </firebase-app>
-
-    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="list" selected-attribute="in-view" role="main">
-      <projects-list name="list" firebase="{{firebase}}"></projects-list>
-      <project-view name="view" route="{{subroute}}" firebase="{{firebase}}"></project-view>
+    <iron-pages selected="[[page]]"
+                attr-for-selected="name"
+                fallback-selection="list"
+                selected-attribute="in-view"
+                role="main">
+      <projects-list name="list"></projects-list>
+      <project-view name="view"
+                    route="{{subroute}}"></project-view>
     </iron-pages>
   </template>
 
@@ -36,9 +46,8 @@
         return {
           route: Object,
           page: String,
-          firebase: Object,
           routeData: Object,
-          subroute: String,
+          subroute: String
         }
       }
 

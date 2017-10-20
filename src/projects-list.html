@@ -1,17 +1,19 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import"
+      href="../bower_components/polymer/polymer-element.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="../bower_components/paper-spinner/paper-spinner-lite.html">
 
-<link rel="import" href="animated-text.html">
-<link rel="import" href="project-tile.html">
+<link rel="import"
+      href="project-tile.html">
+
+<script src="../projects/projects.js"></script>
 
 <dom-module id="projects-list">
   <template>
     <style include="iron-flex iron-flex-alignment">
-       :host {
+      :host {
         display: block;
       }
 
@@ -21,13 +23,8 @@
 
       .projects-header {
         height: 150px;
-      }
-
-      .ghassan-image {
-        height: 100%;
-        position: relative;
-        top: -3px;
-        margin-left: 65px;
+        background-color: #000;
+        display: none;
       }
 
       paper-spinner-lite {
@@ -40,31 +37,32 @@
 
       .projects {
         position: relative;
-        margin-bottom: 30px;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        background-color: #000;
+        border: solid 5px #000;
+        border-top: 0;
       }
 
-      .project-container {
-        display: block;
-        position: absolute;
-        z-index: 1;
-      }
-
-      .project {
-        position: relative;
-        width: 100%;
-        height: 100%;
+      @media only screen and (min-width: 1024px) {
+        .projects {
+          position: relative;
+          display: grid;
+          grid-gap: 5px;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        }
       }
     </style>
 
-    <iron-media-query query="(max-width: 640px)" query-matches="{{small}}"></iron-media-query>
-
     <div class="container vertical layout">
-      <div class="projects-header horizontal layout">
+      <div class="projects-header">
         <animated-text class="animated-text flex"></animated-text>
       </div>
-      <paper-spinner-lite id="spinner" active></paper-spinner-lite>
-      <div id="projects" class="projects"></div>
+      <paper-spinner-lite id="spinner"
+                          active></paper-spinner-lite>
+      <div id="projects"
+           class="projects"></div>
     </div>
   </template>
 
@@ -77,85 +75,21 @@
           inView: {
             type: Boolean,
             observer: 'openedProjects'
-          },
-          grid: Object,
-          firebase: Object,
-          projects: {
-            type: Object,
-            observer: 'renderProjects'
-          },
-          small: Boolean
+          }
         };
-      }
-
-      sortProjects() {
-        console.log(this.$.sort.value);
-        this.grid.sort(this.$.sort.value);
-      }
-
-      getTileSize(sizing_unit) {
-        if (this.small) { return '100vw'; }
-        return (+sizing_unit * 24.7) + 'vw';
       }
 
       openedProjects() {
         if (this.inView && !this.projects) {
-          this.getProjects();
-        }
-      }
-
-      getProjects() {
-        var version = localStorage.getItem('version');
-        var projects = localStorage.getItem('projects');
-        if (!version) {
-          this.firebase.database().ref('/version').once('value').then(snapshot => {
-            localStorage.setItem('version', snapshot.val());
-          });
-          this.firebase.database().ref('/projects').once('value').then(snapshot => {
-            this.projects = snapshot.val();
-            localStorage.setItem('projects', JSON.stringify(this.projects));
-          });
-        } else {
-          this.firebase.database().ref('/version').once('value').then(snapshot => {
-            if (snapshot.val() != version) {
-              localStorage.setItem('version', snapshot.val());
-              this.firebase.database().ref('/projects').once('value')
-                .then(snapshot => localStorage.setItem('projects', JSON.stringify(snapshot.val())));
-            }
-          });
-          this.projects = JSON.parse(projects);
+          this.renderProjects();
         }
       }
 
       renderProjects() {
         this.$.spinner.style.display = 'none';
-        this.projects.forEach((project, index) => {
-          var project_container = document.createElement('div');
-          project_container.className = 'project-container';
-          project_container.style.width = this.getTileSize(project.tile_size.cols);
-          project_container.style.height = this.getTileSize(project.tile_size.rows);
-          var project_item = document.createElement('div');
-          project_item.className = 'project';
-          var project_tile = new ProjectTile(index, this.small, project);
-          this.$.projects.appendChild(project_container);
-          project_container.appendChild(project_item);
-          project_item.appendChild(project_tile);
-        });
-
-        this.grid = new Muuri(this.$.projects, {
-          containerClass: 'projects',
-          itemClass: 'project-container',
-          sortData: {
-            type: function(item, element) {
-              return element.firstElementChild.firstElementChild.getAttribute('type');
-            },
-            year_asc: function(item, element) {
-              return parseInt(element.firstElementChild.firstElementChild.getAttribute('year'));
-            },
-            year_desc: function(item, element) {
-              return -(parseInt(element.firstElementChild.firstElementChild.getAttribute('year')));
-            }
-          }
+        projects.forEach(project => {
+          let project_tile = new ProjectTile(project);
+          this.$.projects.appendChild(project_tile);
         });
       }
     }

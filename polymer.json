@@ -9,9 +9,16 @@
     "src/contact-view.html",
     "src/not-found-view.html"
   ],
-  "sources": ["src/**/*", "images/**/*", "fonts/**/*", "bower.json"],
+  "sources": [
+    "src/**/*",
+    "projects/**/*",
+    "images/**/*",
+    "fonts/**/*",
+    "bower.json"
+  ],
   "extraDependencies": [
     "manifest.json",
+    "projects/projects.js",
     "bower_components/webcomponentsjs/*.js",
     "bower_components/typed.js/lib/*.js",
     "bower_components/velocity/*.min.js",
