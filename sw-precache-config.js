@@ -12,14 +12,19 @@
 
 module.exports = {
   staticFileGlobs: [
-    "index.html",
-    "manifest.json",
-    "images/black-logo.svg",
-    "images/ghassan.png",
-    "bower_components/webcomponentsjs/*",
-    "bower_components/typed.js/lib/*",
-    "bower_components/velocity/*.min.js",
-    "bower_components/muuri/*.min.js"
+    'index.html',
+    'manifest.json',
+    'images/black-logo.svg',
+    'images/ghassan.png',
+    'projects/projects.js',
+    'bower_components/webcomponentsjs/*'
   ],
-  navigateFallback: "index.html"
+  navigateFallback: 'index.html',
+  navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/],
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/v0\/b\/ghassan\-murad\.appspot\.com\/o\//,
+      handler: 'cacheFirst'
+    }
+  ]
 };
