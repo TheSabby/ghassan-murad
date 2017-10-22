@@ -172,7 +172,7 @@
         } else {
           this.$.youtube.style.display = 'none';
           this.project.images.forEach(image => {
-            var project_image = new ProjectImage(this.storagePath, image);
+            var project_image = new ProjectImage(this.storagePath, image, this.projectId);
             this.$.media.appendChild(project_image);
           });
         }

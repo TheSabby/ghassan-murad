@@ -50,6 +50,7 @@
 
       static get properties() {
         return {
+          projectId: Number,
           imageId: Number,
           storage_path: String,
           image: String,
@@ -57,8 +58,9 @@
         };
       }
 
-      constructor(storage_path, project_image) {
+      constructor(storage_path, project_image, project_id) {
         super();
+        this.projectId = project_id;
         this.imageId = project_image.id;
         this.storage_path = storage_path;
         this.image = this.getDownloadURL(storage_path, project_image.image);
@@ -85,10 +87,10 @@
       }
 
       openImage() {
-        this.dispatchEvent(new CustomEvent('open-large-image', {
+        this.dispatchEvent(new CustomEvent('open-large-preview', {
           bubbles: true,
           composed: true,
-          detail: { image: this.image.replace('_thumb.png', '') }
+          detail: { project_id: this.projectId, image_id: this.imageId }
         }));
       }
     }

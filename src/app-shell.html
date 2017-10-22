@@ -35,6 +35,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import"
       href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import"
+      href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import"
       href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import"
       href="../bower_components/paper-icon-button/paper-icon-button.html">
@@ -53,6 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       href="contact-view.html">
 <link rel="lazy-import"
       href="not-found-view.html">
+
+<script src="../projects/projects.js"></script>
 
 <dom-module id="app-shell">
   <template>
@@ -121,6 +125,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-size: contain;
         background-color: #000;
         background-repeat: no-repeat;
+      }
+
+      .large-image-close {
+        --iron-icon-width: 30px;
+        --iron-icon-height: 30px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 16px;
+      }
+
+      .large-image-arrow {
+        --iron-icon-width: 70px;
+        --iron-icon-height: 70px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        cursor: pointer;
       }
     </style>
 
@@ -204,11 +229,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
 
-      <paper-dialog id="largeImage"
-                    class="large-image"
-                    fit></paper-dialog>
     </app-drawer-layout>
-
+    <paper-dialog id="largeImage"
+                  class="large-image vertical layout"
+                  fit
+                  with-backdrop>
+      <div class="horizontal layout center flex">
+        <iron-icon class="large-image-close"
+                   icon="close"
+                   on-click="closeLargePreview"></iron-icon>
+        <iron-icon class="large-image-arrow"
+                   icon="chevron-left"
+                   on-click="openPreviousImage"></iron-icon>
+        <span class="flex"></span>
+        <iron-icon class="large-image-arrow"
+                   icon="chevron-right"
+                   on-click="openNextImage"></iron-icon>
+      </div>
+    </paper-dialog>
     <iron-media-query query="min-width: 1024px"
                       query-matches="{{wideLayout}}"></iron-media-query>
   </template>
@@ -229,13 +267,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
+          openProjectId: Number,
+          openImageId: Number
         };
       }
 
       static get observers() {
         return [
           '_routePageChanged(routeData.page)',
+          '_routeChanged(routeData)'
         ];
+      }
+
+      _routeChanged(routeData) {
+        this.$.largeImage.close();
       }
 
       _routePageChanged(page) {
@@ -265,14 +310,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        window.addEventListener('location-changed', () => this.$.headerLayout.scrollTo(0, 0));
-        window.addEventListener('open-large-image', (e) => this.openLargeImage(e));
+        window.addEventListener('location-changed', () => {
+
+        });
+        window.addEventListener('open-large-preview', (e) => this.openLargePreview(e));
       }
 
-      openLargeImage(e) {
-        var image = e.detail.image;
-        this.$.largeImage.style.backgroundImage = 'url(' + image + ')';
+      closeLargePreview() {
+        this.$.largeImage.close();
+      }
+
+      openLargePreview(e) {
+        this.openProjectId = e.detail.project_id;
+        this.openImageId = e.detail.image_id;
+        this.openLargeImage();
+      }
+
+      openNextImage() {
+        var project = projects.find(project => project.id == this.openProjectId);
+        var imageIds = project.images.map(image => image.id);
+        imageIds.sort();
+        if (this.openImageId < imageIds[imageIds.length - 1]) {
+          this.openImageId++;
+        } else {
+          this.openImageId = imageIds[0];
+        }
+        this.openLargeImage();
+      }
+
+      openPreviousImage() {
+        var project = projects.find(project => project.id == this.openProjectId);
+        var imageIds = project.images.map(image => image.id);
+        imageIds.sort();
+        if (this.openImageId > imageIds[0]) {
+          this.openImageId--;
+        } else {
+          this.openImageId = imageIds[imageIds.length - 1];
+        }
+        this.openLargeImage();
+      }
+
+      openLargeImage() {
+        var project = projects.find(project => project.id == this.openProjectId);
+        var image = project.images.find(image => image.id == this.openImageId);
+        this.$.largeImage.style.backgroundImage = 'url(' +
+          this.getDownloadURL(project.storage_path, image.image) +
+          ')';
         this.$.largeImage.open();
+      }
+
+      getDownloadURL(project_path, image) {
+        return 'https://firebasestorage.googleapis.com/v0/b/ghassan-murad.appspot.com/o/projects%2F' +
+          project_path +
+          '%2F' +
+          image +
+          '?alt=media';
       }
 
       openProjects() {
