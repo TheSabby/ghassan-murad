@@ -182,8 +182,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout id="headerLayout"
-                         has-scrolling-region>
+      <app-header-layout id="headerLayout">
 
         <app-header slot="header"
                     reveals
@@ -281,6 +280,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _routeChanged(routeData) {
         this.$.largeImage.close();
+        window.scrollTo(0, 0);
       }
 
       _routePageChanged(page) {
@@ -310,9 +310,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        window.addEventListener('location-changed', () => {
-
-        });
         window.addEventListener('open-large-preview', (e) => this.openLargePreview(e));
       }
 
