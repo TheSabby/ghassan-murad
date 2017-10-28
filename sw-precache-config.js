@@ -15,7 +15,7 @@ module.exports = {
     'index.html',
     'manifest.json',
     'images/logo.svg',
-    'projects/projects.js',
+    'js/projects.js',
     'bower_components/webcomponentsjs/*'
   ],
   navigateFallback: 'index.html',

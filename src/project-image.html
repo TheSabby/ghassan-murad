@@ -54,7 +54,11 @@
           imageId: Number,
           storage_path: String,
           image: String,
-          tile: Object
+          tile: Object,
+          imageLoaded: {
+            type: Boolean,
+            value: false
+          }
         };
       }
 
@@ -78,7 +82,10 @@
       }
 
       loadBackgroundImage() {
-        this.$.container.style.backgroundImage = 'url(' + this.image + ')';
+        if (!this.imageLoaded) {
+          this.$.container.style.backgroundImage = 'url(' + this.image + ')';
+          this.imageLoaded = true;
+        }
       }
 
       getDownloadURL(project_path, image) {

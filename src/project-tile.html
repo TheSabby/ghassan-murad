@@ -100,6 +100,10 @@
           sort: {
             type: String,
             value: 'id'
+          },
+          imageLoaded: {
+            type: Boolean,
+            value: false
           }
         };
       }
@@ -127,7 +131,10 @@
       }
 
       loadBackgroundImage() {
-        this.$.container.style.backgroundImage = 'url(' + this.showcaseImage + ')';
+        if (!this.imageLoaded) {
+          this.$.container.style.backgroundImage = 'url(' + this.showcaseImage + ')';
+          this.imageLoaded = true;
+        }
       }
 
       getDownloadURL(project_path, image) {
