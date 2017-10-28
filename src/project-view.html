@@ -6,6 +6,8 @@
       href="../bower_components/app-route/app-route.html">
 <link rel="import"
       href="../bower_components/google-youtube/google-youtube.html">
+<link href="https://fonts.googleapis.com/css?family=Cairo:700"
+      rel="stylesheet">
 
 <link rel="import"
       href="project-image.html">
@@ -137,7 +139,8 @@
             value: 576
           },
           youtubeWidthText: String,
-          youtubeHeightText: String
+          youtubeHeightText: String,
+          imagesObserver: Object
         };
       }
 
@@ -145,6 +148,17 @@
         return [
           '_routeProjectChanged(routeData.projectId)',
         ];
+      }
+
+      ready() {
+        super.ready();
+        this.imagesObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.intersectionRatio) {
+              entry.target.loadBackgroundImage();
+            }
+          });
+        });
       }
 
       _routeProjectChanged(projectId) {
@@ -172,6 +186,7 @@
           this.$.youtube.style.display = 'none';
           this.project.images.forEach(image => {
             var project_image = new ProjectImage(this.storagePath, image, this.projectId);
+            this.imagesObserver.observe(project_image);
             this.$.media.appendChild(project_image);
           });
         }

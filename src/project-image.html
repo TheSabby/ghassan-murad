@@ -75,6 +75,9 @@
       renderProjectImage() {
         this.style.gridRow = this.tile.large.rows;
         this.style.gridColumn = this.tile.large.cols;
+      }
+
+      loadBackgroundImage() {
         this.$.container.style.backgroundImage = 'url(' + this.image + ')';
       }
 

@@ -54,8 +54,20 @@
           inView: {
             type: Boolean,
             observer: 'openedProjects'
-          }
+          },
+          imagesObserver: Object
         };
+      }
+
+      ready() {
+        super.ready();
+        this.imagesObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.intersectionRatio) {
+              entry.target.loadBackgroundImage();
+            }
+          });
+        });
       }
 
       openedProjects() {
@@ -67,6 +79,7 @@
       renderProjects() {
         projects.forEach(project => {
           let project_tile = new ProjectTile(project);
+          this.imagesObserver.observe(project_tile);
           this.$.projects.appendChild(project_tile);
         });
       }
