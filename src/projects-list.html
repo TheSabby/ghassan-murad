@@ -2,8 +2,6 @@
       href="../bower_components/polymer/polymer-element.html">
 <link rel="import"
       href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import"
-      href="../bower_components/paper-spinner/paper-spinner-lite.html">
 
 <link rel="import"
       href="project-tile.html">
@@ -19,20 +17,6 @@
 
       .container {
         margin: auto;
-      }
-
-      .projects-header {
-        height: 150px;
-        background-color: #000;
-        display: none;
-      }
-
-      paper-spinner-lite {
-        margin: 60px auto;
-        --paper-spinner-color: var(--app-primary-color);
-        --paper-spinner-stroke-width: 8px;
-        width: 90px;
-        height: 90px;
       }
 
       .projects {
@@ -56,11 +40,6 @@
     </style>
 
     <div class="container vertical layout">
-      <div class="projects-header">
-        <animated-text class="animated-text flex"></animated-text>
-      </div>
-      <paper-spinner-lite id="spinner"
-                          active></paper-spinner-lite>
       <div id="projects"
            class="projects"></div>
     </div>
@@ -86,7 +65,6 @@
       }
 
       renderProjects() {
-        this.$.spinner.style.display = 'none';
         projects.forEach(project => {
           let project_tile = new ProjectTile(project);
           this.$.projects.appendChild(project_tile);
