@@ -154,7 +154,7 @@ var projects = [
     id: 5,
     title: "Spray n' Play",
     description:
-      'The concept behind this advertising/marketing campaign does not only promote LEGOs mission statement, ìInspire and develop the builders of tomorrow but also provokes consumers to initiate a referral network marketing campaign. The main idea was to ignite a promotional event that is of such simplicity to impact consumers themselves to spread exposure. The subjects are to get a construction block, doesn’t matter the size. However, the bigger the better. With the use of spray paint (or any other form of paint) the subjects are to paint the construction block then get a free LEGO Spray n’ Play sticker from the nearest Lego distributer, stick it on the block, take photos of the painted block with the sticker in an interesting spot, post the photo on facebook with the hashtag #spraynplay and the subject with an interesting photo would be contacted to receive a gift from LEGO.',
+      'The concept behind this advertising/marketing campaign does not only promote LEGOs mission statement, Inspire and develop the builders of tomorrow but also provokes consumers to initiate a referral network marketing campaign. The main idea was to ignite a promotional event that is of such simplicity to impact consumers themselves to spread exposure. The subjects are to get a construction block, doesn’t matter the size. However, the bigger the better. With the use of spray paint (or any other form of paint) the subjects are to paint the construction block then get a free LEGO Spray n’ Play sticker from the nearest Lego distributer, stick it on the block, take photos of the painted block with the sticker in an interesting spot, post the photo on facebook with the hashtag #spraynplay and the subject with an interesting photo would be contacted to receive a gift from LEGO.',
     images: [
       {
         id: 1,
@@ -535,7 +535,7 @@ var projects = [
     tile: {
       id: {
         large: {
-          rows: '4/6',
+          rows: '5/6',
           cols: '1/2'
         }
       }
@@ -796,5 +796,601 @@ var projects = [
     type: 'video',
     video_url: 'amprNk-mnvc',
     year: 2013
-  }
+  },
+  {
+    id: 15,
+    title: 'Ferring OBGYN App Promo',
+    showcase_image: 'ferring_obgyn_app_promo.jpg',
+    storage_path: 'ferring_obgyn_app_promo',
+    tile: {
+      id: {
+        large: {
+          rows: '6/7',
+          cols: '3/4'
+        }
+      }
+    },
+    type: 'video',
+    video_url: 's3uypZo6Htw',
+    year: 2017
+  },
+  {
+    id: 16,
+    title: 'Ferring Force IV Promo',
+    showcase_image: 'ferring_forceiv_promo.jpg',
+    storage_path: 'ferring_forceiv_promo',
+    tile: {
+      id: {
+        large: {
+          rows: '6/7',
+          cols: '1/3'
+        }
+      }
+    },
+    type: 'video',
+    video_url: 'RV2-PCSqElc',
+    year: 2017
+  },
+  {
+  id: 17,
+  title: 'Events Boutique Promo',
+  showcase_image: 'eventsbtq_promo.jpg',
+  storage_path: 'eventsbtq_promo',
+  tile: {
+    id: {
+      large: {
+        rows: '6/7',
+        cols: '4/5'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'gj4ww_V3vHs',
+  year: 2017
+},
+{
+  id: 18,
+  title: 'Smartlink+ Promo',
+  showcase_image: 'smartlink.jpg',
+  storage_path: 'smartlink',
+  tile: {
+    id: {
+      large: {
+        rows: '8/9',
+        cols: '3/4'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'OduEUNV6I74',
+  year: 2017
+},
+{
+  id: 19,
+  title: 'Levant Studio Promo',
+  showcase_image: 'levant_studio_promo.jpg',
+  storage_path: 'levant_studio_promo',
+  tile: {
+    id: {
+      large: {
+        rows: '7/9',
+        cols: '1/3'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'ZcfT_dWMvmY',
+  year: 2017
+},
+{
+  id: 20,
+  title: 'Albaitil Ashwai - Sindibad',
+  showcase_image: 'sindibad.jpg',
+  storage_path: 'sindibad',
+  tile: {
+    id: {
+      large: {
+        rows: '7/8',
+        cols: '4/5'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'sEAdwUzBWCE',
+  year: 2017
+},
+{
+  id: 21,
+  title: 'Deco Sunset',
+  showcase_image: 'decosunset.jpg',
+  storage_path: 'decosunset',
+  tile: {
+    id: {
+      large: {
+        rows: '8/9',
+        cols: '4/5'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'QSvJPqniz2U',
+  year: 2017
+},
+{
+  id: 22,
+  title: 'Tamer Gargour - Naymeen',
+  showcase_image: 'naymeen.jpg',
+  storage_path: 'naymeen',
+  tile: {
+    id: {
+      large: {
+        rows: '4/5',
+        cols: '1/2'
+      }
+    }
+  },
+  type: 'video',
+  video_url: 'jAFNQu6oY58',
+  year: 2018
+},
+{
+  id: 23,
+  title: 'Biodiversity - Children Museum Jordan',
+  description:
+    'The ﬁrst locally designed full exhibit in Jordan. The spacious area displays a variety of animals, birds, plants, ﬁsh, insects and fascinating geological exhibits. The exhibit’s concept was inspired by pebbles found in Jordan’s nature, Since the pebbles uniquely exist in diverse frames of nature.To ensure a success in the visual ﬂow of design elements, this concept provides great ﬂexibility and maintains unity in the exhibit’s astethic. The exhibit was designed to ensure an immersive visitor experience in Jordan’s forests, desert, river and sky.',
+  images: [
+    {
+      id: 1,
+      image: '01.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '1/5'
+        }
+      }
+    },
+    {
+      id: 2,
+      image: '02.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 3,
+      image: '03.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 4,
+      image: '04.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 5,
+      image: '05.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 6,
+      image: '06.jpg',
+      tile: {
+        large: {
+          rows: '2/4',
+          cols: '4/5'
+        }
+      }
+    },
+    {
+      id: 7,
+      image: '07.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '3/4'
+        }
+      }
+    },
+    {
+      id: 8,
+      image: '08.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '3/4'
+        }
+      }
+    }
+  ],
+  showcase_image: '01.jpg',
+  storage_path: 'biodiversity',
+  tile: {
+    id: {
+      large: {
+        rows: '10/11',
+        cols: '1/3'
+      }
+    }
+  },
+  type: 'branding',
+  year: 2017
+},
+{
+  id: 24,
+  title: 'ArabEMBs Rebranding',
+  description:
+    'The various dots covering the arab region depict the organization’s activity scope. The dots represent active points on the map in diverse proportions to display the variety and afﬂuence of the organization’s reach. The logo was created in a clean and ordered manner to depict modernty and seriousness in the organization’s tone-of-voice.',
+  images: [
+    {
+      id: 1,
+      image: '01.jpg',
+      tile: {
+        large: {
+          rows: '1/3',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 2,
+      image: '02.jpg',
+      tile: {
+        large: {
+          rows: '1/3',
+          cols: '4/5'
+        }
+      }
+    },
+    {
+      id: 3,
+      image: '03.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 4,
+      image: '04.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 5,
+      image: '05.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '3/4'
+        }
+      }
+    },
+    {
+      id: 6,
+      image: '06.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '4/5'
+        }
+      }
+    },
+    {
+      id: 7,
+      image: '07.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 8,
+      image: '08.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '3/4'
+        }
+      }
+    },
+    {
+      id: 9,
+      image: '09.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 10,
+      image: '10.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '3/4'
+        }
+      }
+    }
+  ],
+  showcase_image: '01.jpg',
+  storage_path: 'ArabEMBs',
+  tile: {
+    id: {
+      large: {
+        rows: '09/11',
+        cols: '3/5'
+      }
+    }
+  },
+  type: 'branding',
+  year: 2018
+},
+{
+  id: 25,
+  title: 'Labeeb App Branding & UI Design',
+  description:
+    'Labeeb App is a smart application that grants members coupons for a selected range of services in exchange for a monthly subscription.',
+  images: [
+    {
+      id: 1,
+      image: '01.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '1/3'
+        }
+      }
+    },
+    {
+      id: 3,
+      image: '03.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '3/4'
+        }
+      }
+    },
+    {
+      id: 2,
+      image: '02.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '2/4'
+        }
+      }
+    },
+    {
+      id: 4,
+      image: '04.jpg',
+      tile: {
+        large: {
+          rows: '1/4',
+          cols: '4/5'
+        }
+      }
+    },
+    {
+      id: 5,
+      image: '05.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 6,
+      image: '06.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '1/3'
+        }
+      }
+    },
+    {
+      id: 7,
+      image: '07.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '3/4'
+        }
+      }
+    },
+  ],
+  showcase_image: '01.jpg',
+  storage_path: 'Labeeb',
+  tile: {
+    id: {
+      large: {
+        rows: '09/10',
+        cols: '2/3'
+      }
+    }
+  },
+  type: 'branding',
+  year: 2018
+},
+{
+  id: 27,
+  title: 'Murtaqi Branding',
+  description:
+    '',
+  images: [
+    {
+      id: 1,
+      image: '01.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '1/3'
+        }
+      }
+    },
+    {
+      id: 3,
+      image: '03.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '3/4'
+        }
+      }
+    },
+    {
+      id: 2,
+      image: '02.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '2/4'
+        }
+      }
+    },
+    {
+      id: 4,
+      image: '04.jpg',
+      tile: {
+        large: {
+          rows: '1/4',
+          cols: '4/5'
+        }
+      }
+    },
+    {
+      id: 5,
+      image: '05.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '1/2'
+        }
+      }
+    },
+    {
+      id: 6,
+      image: '06.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '1/3'
+        }
+      }
+    },
+    {
+      id: 7,
+      image: '07.jpg',
+      tile: {
+        large: {
+          rows: '3/4',
+          cols: '3/4'
+        }
+      }
+    },
+  ],
+  showcase_image: '01.jpg',
+  storage_path: 'undp',
+  tile: {
+    id: {
+      large: {
+        rows: '09/10',
+        cols: '1/2'
+      }
+    }
+  },
+  type: 'graphic',
+  year: 2018
+},
+{
+  id: 26,
+  title: 'Murtaqi Branding',
+  description:
+    '',
+  images: [
+    {
+      id: 1,
+      image: '01.jpg',
+      tile: {
+        large: {
+          rows: '1/2',
+          cols: '1/3'
+        }
+      }
+    },
+    {
+      id: 3,
+      image: '03.jpg',
+      tile: {
+        large: {
+          rows: '1/3',
+          cols: '3/5'
+        }
+      }
+    },
+    {
+      id: 2,
+      image: '02.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '2/3'
+        }
+      }
+    },
+    {
+      id: 4,
+      image: '04.jpg',
+      tile: {
+        large: {
+          rows: '2/3',
+          cols: '1/2'
+        }
+      }
+    },
+  ],
+  showcase_image: '01.jpg',
+  storage_path: 'murtaqi',
+  tile: {
+    id: {
+      large: {
+        rows: '07/08',
+        cols: '3/4'
+      }
+    }
+  },
+  type: 'graphic',
+  year: 2018
+},
 ];
