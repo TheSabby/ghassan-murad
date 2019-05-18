@@ -1,0 +1,17 @@
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  width: 120px;
+}
+
+.active {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.text {
+  margin: 10px 0;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}

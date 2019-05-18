@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  height: 90px;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: var(--soft-shadow);
+  justify-content: center;
+}
+
+.nav {
+  display: flex;
+  align-self: flex-end;
+}

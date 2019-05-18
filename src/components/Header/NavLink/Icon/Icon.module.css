@@ -1,0 +1,213 @@
+:root {
+  --icon-size: 18px;
+  --icon-margin: 9px;
+}
+
+.container {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/***************************************************
+Circle Type
+***************************************************/
+
+.circle {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-right: var(--icon-margin);
+  background: var(--primary-color);
+  border-radius: 50%;
+
+  animation-name: jump, shift;
+  animation-duration: 1.5s, 1.5s;
+  animation-iteration-count: infinite, infinite;
+  animation-timing-function: ease, ease;
+  animation-delay: 0.4s, 0.4s;
+  transform: scale(0);
+}
+
+.circle:last-of-type {
+  margin-right: 0;
+}
+
+@keyframes shift {
+  0% {
+    transform: scale(0);
+    border-radius: 50%;
+  }
+  40% {
+    transform: scale(1);
+    border-radius: 50%;
+  }
+  70% {
+    transform: scale(1);
+    border-radius: 50%;
+  }
+  100% {
+    transform: scale(0);
+    border-radius: 50%;
+  }
+}
+
+@keyframes jump {
+  0% {
+    background: var(--primary-color);
+  }
+  50% {
+    background: var(--secondary-color);
+  }
+  100% {
+    background: var(--primary-color);
+  }
+}
+
+/***************************************************
+Triangle Type
+***************************************************/
+
+.triangle {
+  width: 0%;
+  height: 0%;
+  margin-right: calc(var(--icon-margin) - 5px);
+  border-left: var(--icon-margin) solid transparent;
+  border-right: var(--icon-margin) solid transparent;
+
+  animation-duration: 1.5s, 1.5s;
+  animation-timing-function: ease, ease;
+}
+
+.triangle:first-of-type,
+.triangle:last-of-type {
+  border-bottom: var(--icon-size) solid var(--primary-color);
+
+  animation-name: upp, colorup;
+  animation-iteration-count: infinite, infinite;
+  animation-delay: 0.8s, 0.8s;
+}
+
+.triangle:nth-of-type(2) {
+  border-top: var(--icon-size) solid var(--primary-color);
+
+  animation-name: downn, colordown;
+  animation-iteration-count: infinite;
+  animation-delay: 0.8s;
+}
+
+.triangle:last-of-type {
+  margin-right: 0;
+}
+
+@keyframes upp {
+  0% {
+    transform: translateY(0px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+  70% {
+    transform: translateY(-25%);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes downn {
+  0% {
+    transform: translateY(0px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+  70% {
+    transform: translateY(25%);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes colorup {
+  0% {
+    border-bottom: var(--icon-size) solid var(--primary-color);
+  }
+  50% {
+    border-bottom: var(--icon-size) solid var(--secondary-color);
+  }
+  100% {
+    border-bottom: var(--icon-size) solid var(--primary-color);
+  }
+}
+
+@keyframes colordown {
+  0% {
+    border-top: var(--icon-size) solid var(--secondary-color);
+  }
+  50% {
+    border-top: var(--icon-size) solid var(--primary-color);
+  }
+  100% {
+    border-top: var(--icon-size) solid var(--secondary-color);
+  }
+}
+
+/***************************************************
+Square Type
+***************************************************/
+
+.square {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-right: var(--icon-margin);
+  background: var(--primary-color);
+  border-radius: 20%;
+
+  animation-name: jump, turn;
+  animation-duration: 1.5s, 1.5s;
+  animation-iteration-count: infinite, infinite;
+  animation-timing-function: ease, ease;
+  animation-delay: 0.4s, 0.4s;
+}
+
+.square:nth-of-type(2) {
+  animation-delay: 0.6s, 0.6s;
+}
+
+.square:last-of-type {
+  margin-right: 0;
+  animation-delay: 0.8s, 0.8s;
+}
+
+@keyframes turn {
+  0% {
+    transform: translateY(0px) rotate(00deg);
+    border-radius: 20%;
+  }
+  40% {
+    transform: translateY(0px) rotate(00deg);
+    border-radius: 20%;
+  }
+  70% {
+    transform: translateY(-100%) rotate(90deg);
+    border-radius: 40%;
+  }
+  100% {
+    transform: translateY(0px) rotate(180deg);
+    border-radius: 20%;
+  }
+}
+
+@keyframes jump {
+  0% {
+    background: var(--primary-color);
+  }
+  50% {
+    background: var(--secondary-color);
+  }
+  100% {
+    background: var(--primary-color);
+  }
+}
