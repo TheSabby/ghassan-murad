@@ -5,6 +5,7 @@
   background-color: #fff;
   box-shadow: var(--soft-shadow);
   justify-content: center;
+  border-top: solid var(--primary-color) 24px;
 }
 
 .nav {
