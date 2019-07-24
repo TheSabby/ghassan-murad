@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Card from '../Card';
 import {
   card,
@@ -8,19 +9,30 @@ import {
 } from './ProjectCard.module.css';
 import DefaultImage from './Default.jpg';
 
-export default function ProjectCard(props) {
+function ProjectCard(props) {
   const {
     title = '',
     description = '',
     coverImage = DefaultImage,
     alt = `Placehoder image for ${title}`,
     flex = 1,
-    minHeight = 300,
+    height = 300,
+    projectSlug,
+    history,
     ...rest
   } = props;
 
   return (
-    <Card className={card} style={{ flex, minHeight }} {...rest}>
+    <Card
+      className={card}
+      style={{ flex, height }}
+      onClick={() => {
+        if (projectSlug) {
+          history.push(`/projects/${projectSlug}`);
+        }
+      }}
+      {...rest}
+    >
       <h4 className={titleClass}>{title}</h4>
       {coverImage && (
         <div
@@ -37,3 +49,5 @@ export default function ProjectCard(props) {
     </Card>
   );
 }
+
+export default withRouter(ProjectCard);

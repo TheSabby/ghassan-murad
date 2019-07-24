@@ -2,6 +2,12 @@
   position: relative;
   overflow: hidden;
   margin: 12px;
+  cursor: pointer;
+  transition: box-shadow ease-in-out 0.1s;
+}
+
+.card:hover {
+  box-shadow: var(--soft-shadow-elevated);
 }
 
 .title {
@@ -27,7 +33,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
+  text-align: center;
+  box-sizing: border-box;
+  transition: opacity ease-in-out 0.1s;
+}
+
+.descriptionContainer > p {
   font-size: 24px;
+  margin: 0;
 }
 
 .img {
@@ -35,4 +49,7 @@
   width: 100%;
   height: calc(100% - 30px);
   border-radius: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

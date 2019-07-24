@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import Icon from './Icon';
+import Icon from '../Icon';
 import styles from './NavLink.module.css';
 
 function NavLink(props) {

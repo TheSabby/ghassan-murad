@@ -3,4 +3,5 @@
   background-color: #fff;
   box-shadow: var(--soft-shadow);
   border-radius: 10px;
+  box-sizing: border-box;
 }
