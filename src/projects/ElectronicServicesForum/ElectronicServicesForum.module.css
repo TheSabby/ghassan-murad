@@ -1,0 +1,11 @@
+.title {
+  color: var(--primary-color);
+  font-size: 26px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 18px;
+  color: #333;
+}

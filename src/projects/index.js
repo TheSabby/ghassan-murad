@@ -1,3 +1,7 @@
 import BaghdadOlympics from './BaghdadOlympics';
+import ElectronicServicesForum from './ElectronicServicesForum';
 
-export default { BaghdadOlympics };
+export default {
+  BaghdadOlympics,
+  ElectronicServicesForum
+};
